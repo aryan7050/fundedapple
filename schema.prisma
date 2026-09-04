@@ -1,0 +1,228 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum Role {
+  USER
+  ADMIN
+  SUPPORT
+}
+
+enum PlanType {
+  CHALLENGE
+  INSTANT
+  TWO_STEP
+  ONE_STEP
+  BLITZ
+}
+
+enum PlanStatus {
+  ACTIVE
+  ARCHIVED
+}
+
+enum OrderStatus {
+  PENDING
+  PAID
+  FAILED
+  REFUNDED
+}
+
+enum AccountStatus {
+  PENDING
+  ACTIVE
+  PHASE_1
+  PHASE_2
+  FUNDED
+  FAILED
+  BREACHED
+  CANCELLED
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  COMPLETED
+  REJECTED
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  RESOLVED
+  CLOSED
+}
+
+enum KycStatus {
+  NOT_SUBMITTED
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+model User {
+  id              String    @id @default(cuid())
+  email           String    @unique
+  passwordHash    String?
+  authProvider    String    @default("local")
+  firstName       String
+  lastName        String
+  country         String?
+  phone           String?
+  role            Role      @default(USER)
+  isVerified      Boolean   @default(false)
+  isActive        Boolean   @default(true)
+  emailOtp        String?
+  emailOtpExpiresAt DateTime?
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+
+  kycStatus         KycStatus @default(NOT_SUBMITTED)
+  dateOfBirth       DateTime?
+  addressLine1      String?
+  city              String?
+  stateProvince     String?
+  postalCode        String?
+  idDocumentType    String?
+  idDocumentNumber  String?
+  idDocumentFrontUrl String?
+  idDocumentBackUrl  String?
+  kycSubmittedAt    DateTime?
+  kycReviewedAt     DateTime?
+  kycRejectionReason String?
+
+  orders          Order[]
+  accounts        Account[]
+  payouts         Payout[]
+  tickets         Ticket[]
+  auditLogs       AuditLog[]
+  sessions        Session[]
+
+  @@map("users")
+}
+
+model Plan {
+  id                  String      @id @default(cuid())
+  name                String
+  type                PlanType
+  trackKey            String
+  price               Float
+  initialBalance      Float
+  profitTarget        Float
+  profitTargetPhase2  Float?
+  targetNote          String?
+  maxDrawdown         Float
+  dailyLossLimit      Float
+  minTradingDays      Int
+  newsTradingAllowed  Boolean     @default(true)
+  profitSplitLabel    String      @default("Up to 90%")
+  status              PlanStatus  @default(ACTIVE)
+  createdAt           DateTime    @default(now())
+  updatedAt           DateTime    @updatedAt
+
+  orders              Order[]
+  accounts            Account[]
+
+  @@unique([trackKey, initialBalance])
+  @@map("plans")
+}
+
+model Order {
+  id               String      @id @default(cuid())
+  userId           String
+  planId           String
+  amount           Float
+  currency         String      @default("USD")
+  status           OrderStatus @default(PENDING)
+  paymentProvider  String?
+  paymentIntentId  String?
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  user             User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan             Plan        @relation(fields: [planId], references: [id], onDelete: Restrict)
+
+  @@map("orders")
+}
+
+model Account {
+  id              String        @id @default(cuid())
+  userId          String
+  planId          String
+  status          AccountStatus @default(PENDING)
+  phase           String        @default("phase_1")
+  balance         Float         @default(0)
+  startDate       DateTime?
+  endDate         DateTime?
+  passStatus      String?
+  createdAt       DateTime      @default(now())
+  updatedAt       DateTime      @updatedAt
+
+  user            User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  plan            Plan          @relation(fields: [planId], references: [id], onDelete: Restrict)
+  payouts         Payout[]
+
+  @@map("accounts")
+}
+
+model Payout {
+  id             String       @id @default(cuid())
+  userId         String
+  accountId      String?
+  amount         Float
+  status         PayoutStatus @default(PENDING)
+  requestedAt    DateTime     @default(now())
+  processedAt    DateTime?
+  payoutMethod   String?
+  notes          String?
+  createdAt      DateTime     @default(now())
+
+  user           User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  account        Account?     @relation(fields: [accountId], references: [id], onDelete: SetNull)
+
+  @@map("payouts")
+}
+
+model Ticket {
+  id          String      @id @default(cuid())
+  userId      String
+  subject     String
+  message     String
+  status      TicketStatus @default(OPEN)
+  priority    String      @default("MEDIUM")
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  user        User        @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("tickets")
+}
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  userId     String?
+  action     String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  user       User?    @relation(fields: [userId], references: [id], onDelete: SetNull)
+
+  @@map("audit_logs")
+}
+
+model Session {
+  id              String   @id @default(cuid())
+  userId          String
+  refreshTokenHash String
+  expiresAt       DateTime
+  createdAt       DateTime @default(now())
+
+  user            User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@map("sessions")
+}
