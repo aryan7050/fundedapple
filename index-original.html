@@ -1,0 +1,872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fundedapple — Get Funded, Trade Freely</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0F0C;
+    --bg-1:#10160F;
+    --bg-2:#161E17;
+    --card:#12180F;
+    --text:#EAF0E7;
+    --text-soft:#94A390;
+    --text-faint:#5B6960;
+    --green:#5CAD75;
+    --green-bright:#7FCB96;
+    --green-deep:#20351F;
+    --red:#D9705A;
+    --red-bright:#E8907C;
+    --red-deep:#3A211C;
+    --gold:#D9A94F;
+    --line:#212B21;
+    --line-2:#2B372B;
+    --radius:6px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);color:var(--text);
+    font-family:'Inter',sans-serif;line-height:1.55;
+    -webkit-font-smoothing:antialiased;overflow-x:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .display{font-family:'Fraunces',serif;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:1180px;margin:0 auto;padding:0 32px;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:0.14em;
+    text-transform:uppercase;color:var(--green-bright);
+    display:flex;align-items:center;gap:10px;
+  }
+  .eyebrow::before{content:"";width:14px;height:1px;background:var(--green);}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:translateY(0);}}
+  .reveal{opacity:0;animation:fadeUp .7s ease forwards;}
+
+  .apple-mark{display:block;}
+  .apple-mark .half-l{fill:var(--green);}
+  .apple-mark .half-r{fill:var(--red);}
+  .apple-mark .leaf{fill:var(--green-bright);}
+  .apple-mark .stem{stroke:var(--text-faint);}
+
+  /* ---------- PROMO BAR ---------- */
+  .promo{
+    background:var(--green-deep);color:var(--green-bright);
+    text-align:center;padding:9px 16px;font-size:13px;
+    font-family:'IBM Plex Mono',monospace;letter-spacing:0.02em;
+    border-bottom:1px solid var(--line-2);
+  }
+  .promo b{color:var(--gold);}
+
+  /* ---------- HEADER (MODIFIED) ---------- */
+  header{
+    position:sticky;top:0;z-index:50;
+    background:rgba(10,15,12,0.88);backdrop-filter:blur(12px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav{display:flex;align-items:center;justify-content:space-between;height:76px;}
+  .logo{font-family:'Fraunces',serif;font-weight:500;font-size:22px;display:flex;align-items:center;gap:10px;letter-spacing:-0.01em;}
+  .navlinks{display:flex;gap:32px;font-size:14px;color:var(--text-soft);font-weight:500;}
+  .navlinks a{transition:color .2s;}
+  .navlinks a:hover{color:var(--green-bright);}
+  
+  .navcta{display:flex;align-items:center;gap:20px;}
+  .btn{
+    display:inline-flex;align-items:center;justify-content:center;gap:8px;
+    padding:11px 24px;font-size:13.5px;font-weight:600;
+    border-radius:var(--radius);cursor:pointer;transition:all .2s ease;
+    white-space:nowrap;border:1px solid transparent;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg, var(--green-bright) 0%, var(--green) 100%);
+    color:#050B06;
+    box-shadow:0 0 16px rgba(92,173,117,0.25);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 24px rgba(127,203,150,0.45);
+  }
+  .btn-ghost{background:transparent;border-color:var(--line-2);color:var(--text);}
+  .btn-ghost:hover{border-color:var(--green);color:var(--green-bright);background:var(--bg-2);}
+  
+  .link-login{
+    font-size:14px;font-weight:600;color:var(--text-soft);
+    padding:8px 16px;border-radius:var(--radius);
+    transition:all .2s ease;border:1px solid transparent;
+  }
+  .link-login:hover{
+    color:var(--text);border-color:var(--line-2);background:rgba(255,255,255,0.03);
+  }
+  @media(max-width:860px){.navlinks{display:none;}}
+
+  /* ---------- HERO ---------- */
+  .hero{padding:80px 0 60px;position:relative;}
+  .hero::before{
+    content:"";position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+    width:900px;height:420px;
+    background:radial-gradient(ellipse at center, rgba(92,173,117,0.14), transparent 70%);
+    pointer-events:none;
+  }
+  .hero-inner{position:relative;text-align:center;max-width:760px;margin:0 auto;}
+  .hero h1{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(38px,5.6vw,66px);line-height:1.04;letter-spacing:-0.02em;margin:22px 0 20px;}
+  .hero h1 em{font-style:italic;color:var(--green-bright);font-weight:400;}
+  .hero p.lead{font-size:17.5px;color:var(--text-soft);max-width:520px;margin:0 auto 32px;}
+  .hero-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-bottom:14px;}
+  .hero-note{font-size:12.5px;color:var(--text-faint);font-family:'IBM Plex Mono',monospace;}
+
+  .stat-row{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:6px;overflow:hidden;margin-top:56px;}
+  @media(max-width:760px){.stat-row{grid-template-columns:repeat(2,1fr);}}
+  .stat{background:var(--bg-1);padding:26px 22px;text-align:left;}
+  .stat .sv{font-family:'Fraunces',serif;font-size:30px;letter-spacing:-0.01em;color:var(--green-bright);}
+  .stat .sl{font-size:12px;color:var(--text-soft);margin-top:4px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.04em;}
+
+  /* ---------- GUARANTEE BAND ---------- */
+  .guarantee-outer{position:relative;border-radius:14px;padding:2px;}
+  .guarantee-outer::before{
+    content:"";position:absolute;inset:-4px;border-radius:18px;
+    background:conic-gradient(from 0deg, var(--green), var(--green-bright), var(--gold), var(--red), var(--red-bright), var(--gold), var(--green));
+    opacity:.55;filter:blur(16px);z-index:0;animation:spinGlow 12s linear infinite;
+  }
+  .guarantee-band{
+    position:relative;z-index:1;border-radius:12px;overflow:hidden;
+    background:linear-gradient(120deg, var(--green-deep) 0%, var(--bg-1) 42%, var(--bg-1) 58%, var(--red-deep) 100%);
+    border:1px solid var(--line-2);padding:38px 40px;
+    display:flex;justify-content:space-between;align-items:center;gap:32px;flex-wrap:wrap;
+  }
+  .g-mark{flex-shrink:0;filter:drop-shadow(0 0 18px rgba(92,173,117,0.35)) drop-shadow(0 0 18px rgba(217,112,90,0.25));}
+  .g-figures{display:flex;gap:28px;align-items:center;flex-wrap:wrap;}
+  .g-figure{text-align:center;}
+  .g-figure .gv{font-family:'Fraunces',serif;font-size:44px;line-height:1;letter-spacing:-0.02em;}
+  .g-figure .gv.green{color:var(--green-bright);}
+  .g-figure .gv.red{color:var(--red-bright);}
+  .g-figure .gl{font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);margin-top:2px;}
+  .g-divider{width:1px;height:48px;background:var(--line-2);}
+  @media(max-width:760px){.guarantee-band{flex-direction:column;text-align:center;}.g-divider{display:none;}}
+
+  /* ---------- TICKER / PAYOUT PROOF (MODIFIED) ---------- */
+  .ticker-shell{
+    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+    padding:16px 0;overflow:hidden;background:var(--bg-1);position:relative;
+  }
+  .ticker-track{display:flex;gap:0;width:max-content;animation:scroll 30s linear infinite;}
+  .ticker-track:hover{animation-play-state:paused;}
+  @keyframes scroll{from{transform:translateX(0);}to{transform:translateX(-50%);}}
+  .tick-item{
+    display:flex;align-items:center;gap:12px;padding:0 28px;
+    border-right:1px solid var(--line-2);font-size:13.5px;white-space:nowrap;
+  }
+  .tick-item .tdot{width:8px;height:8px;border-radius:50%;background:var(--green-bright);box-shadow:0 0 8px var(--green-bright);}
+  .tick-item b{color:var(--green-bright);font-family:'IBM Plex Mono',monospace;font-weight:600;}
+  .tick-item span.name{color:var(--text);font-weight:500;}
+  .tick-item span.method{color:var(--text-faint);font-size:12px;font-family:'IBM Plex Mono',monospace;}
+
+  section{padding:100px 0;}
+  section.alt{background:var(--bg-1);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+  .sec-head{max-width:600px;margin-bottom:52px;}
+  .sec-head.center{margin-left:auto;margin-right:auto;text-align:center;}
+  .sec-head h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(28px,3.2vw,40px);letter-spacing:-0.01em;margin-top:14px;}
+  .sec-head p{color:var(--text-soft);margin-top:14px;font-size:15.5px;max-width:520px;}
+  .sec-head.center p{margin-left:auto;margin-right:auto;}
+
+  /* ---------- HOW IT WORKS / PROCESS (MODIFIED & ENHANCED) ---------- */
+  .steps-grid-new{
+    display:grid;grid-template-columns:repeat(3,1fr);gap:24px;
+  }
+  @media(max-width:880px){.steps-grid-new{grid-template-columns:1fr;}}
+  .step-card-new{
+    background:var(--bg-1);border:1px solid var(--line);
+    border-radius:12px;padding:36px 30px;position:relative;
+    transition:all .3s ease;overflow:hidden;
+  }
+  .step-card-new::before{
+    content:"";position:absolute;top:0;left:0;right:0;height:3px;
+    background:linear-gradient(90deg, transparent, var(--green-bright), transparent);
+    opacity:0;transition:opacity .3s ease;
+  }
+  .step-card-new:hover{
+    transform:translateY(-6px);
+    border-color:var(--green);
+    box-shadow:0 12px 30px -10px rgba(92,173,117,0.25);
+  }
+  .step-card-new:hover::before{opacity:1;}
+  
+  .step-head-row{
+    display:flex;align-items:center;justify-content:space-between;margin-bottom:20px;
+  }
+  .step-num-badge{
+    font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;
+    color:var(--green-bright);background:var(--green-deep);
+    padding:6px 14px;border-radius:20px;border:1px solid var(--line-2);
+  }
+  .step-icon{
+    width:40px;height:40px;border-radius:10px;background:var(--bg-2);
+    display:flex;align-items:center;justify-content:center;color:var(--green-bright);
+    font-size:18px;border:1px solid var(--line-2);
+  }
+  .step-card-new h3{
+    font-family:'Fraunces',serif;font-weight:500;font-size:22px;margin-bottom:12px;
+    color:var(--text);
+  }
+  .step-card-new p{
+    font-size:14.5px;color:var(--text-soft);line-height:1.6;
+  }
+  .step-feature-tag{
+    margin-top:20px;padding-top:16px;border-top:1px dashed var(--line-2);
+    font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text-faint);
+    display:flex;align-items:center;gap:6px;
+  }
+  .step-feature-tag::before{content:"✓";color:var(--green-bright);font-weight:bold;}
+
+  /* ---------- CONFIGURATOR ---------- */
+  .config-outer{position:relative;padding:2px;border-radius:10px;}
+  .config-outer::before{
+    content:"";position:absolute;inset:-6px;border-radius:16px;
+    background:conic-gradient(from 0deg, var(--green), var(--green-bright), var(--gold), var(--green), var(--red-deep), var(--green));
+    opacity:.4;filter:blur(20px);transition:opacity .4s;z-index:0;
+    animation:spinGlow 10s linear infinite;
+  }
+  .config-outer::after{
+    content:"";position:absolute;inset:0;border-radius:10px;
+    background:conic-gradient(from 0deg, var(--green), transparent 30%, transparent 70%, var(--green));
+    opacity:.5;filter:blur(2px);z-index:0;
+    animation:spinGlow 10s linear infinite;
+  }
+  @keyframes spinGlow{from{transform:rotate(0deg);}to{transform:rotate(360deg);}}
+  .config-outer.hot::before{opacity:.65;background:conic-gradient(from 0deg, var(--red), var(--gold), var(--red-bright), var(--gold), var(--red-deep), var(--red));}
+  .config-outer.hot::after{background:conic-gradient(from 0deg, var(--red), transparent 30%, transparent 70%, var(--red));opacity:.6;}
+  .config{position:relative;z-index:1;background:var(--bg-1);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .config-tabs{display:flex;border-bottom:1px solid var(--line);flex-wrap:wrap;}
+  .config-tab{flex:1;min-width:120px;padding:16px 10px;text-align:center;font-size:13px;font-weight:600;color:var(--text-soft);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;box-shadow:inset 0 0 0 0 rgba(0,0,0,0);}
+  .config-tab .ctag{display:block;font-size:10px;font-family:'IBM Plex Mono',monospace;color:var(--text-faint);text-transform:uppercase;letter-spacing:0.05em;margin-top:2px;}
+  .config-tab:hover:not(.active){color:var(--text);background:var(--bg-2);box-shadow:inset 0 -2px 0 0 var(--green),0 0 22px -6px rgba(92,173,117,0.5);}
+  .config-tab[data-track="blitz"]:hover:not(.active),.config-tab[data-track="instant"]:hover:not(.active){box-shadow:inset 0 -2px 0 0 var(--red),0 0 22px -6px rgba(217,112,90,0.5);}
+  .config-tab.active{color:var(--green-bright);border-bottom-color:var(--green);background:var(--bg-2);}
+  .config-tab.active.tab-hot{color:var(--red-bright);border-bottom-color:var(--red);}
+  .config-body{padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:40px;position:relative;overflow:hidden;}
+  @media(max-width:800px){.config-body{grid-template-columns:1fr;}}
+  .config-watermark{
+    position:absolute;right:-40px;bottom:-40px;width:280px;height:280px;
+    opacity:.06;pointer-events:none;transition:transform .4s ease;
+  }
+  .config-body:hover .config-watermark{transform:scale(1.05) rotate(3deg);}
+
+  .size-grid{display:flex;flex-wrap:wrap;gap:8px;margin:14px 0 24px;}
+  .size-chip{padding:8px 16px;border:1px solid var(--line-2);border-radius:20px;font-family:'IBM Plex Mono',monospace;font-size:12.5px;cursor:pointer;color:var(--text-soft);transition:all .15s;}
+  .size-chip:hover{border-color:var(--green);color:var(--text);box-shadow:0 0 16px -4px rgba(92,173,117,0.55);}
+  .size-grid.hot .size-chip:hover{border-color:var(--red);box-shadow:0 0 16px -4px rgba(217,112,90,0.55);}
+  .size-chip.active{background:var(--green-deep);border-color:var(--green);color:var(--green-bright);}
+  .size-grid.hot .size-chip.active{background:var(--red-deep);border-color:var(--red);color:var(--red-bright);}
+  .config-label{font-size:12px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);margin-bottom:6px;}
+
+  .rule-list{display:flex;flex-direction:column;position:relative;z-index:1;}
+  .rule-row{display:flex;justify-content:space-between;padding:12px 0;border-bottom:1px dashed var(--line-2);font-size:14px;}
+  .rule-row:last-child{border-bottom:none;}
+  .rule-row .rl{color:var(--text-soft);}
+  .rule-row .rv{font-family:'IBM Plex Mono',monospace;font-weight:500;}
+  .price-block{margin-top:20px;padding-top:20px;border-top:1px solid var(--line-2);display:flex;justify-content:space-between;align-items:center;position:relative;z-index:1;}
+  .price-block .pv{font-family:'Fraunces',serif;font-size:32px;color:var(--green-bright);}
+  .price-block .pv.hot{color:var(--red-bright);}
+  .price-block .pn{font-size:12px;color:var(--text-faint);}
+
+  /* ---------- PLATFORMS ---------- */
+  .plat-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;}
+  @media(max-width:800px){.plat-grid{grid-template-columns:repeat(2,1fr);}}
+  .plat-card{background:var(--bg-1);border:1px solid var(--line);border-radius:8px;padding:26px 22px;text-align:center;transition:border-color .2s,transform .2s,box-shadow .2s;}
+  .plat-card:hover{border-color:var(--green);transform:translateY(-3px);box-shadow:0 0 0 1px var(--green),0 16px 36px -12px rgba(92,173,117,0.45);}
+  .plat-badge{
+    width:52px;height:52px;border-radius:12px;margin:0 auto 16px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:17px;font-weight:500;
+    background:var(--green-deep);color:var(--green-bright);
+  }
+  .plat-card h4{font-size:14.5px;font-weight:600;margin-bottom:6px;}
+  .plat-card p{font-size:12.5px;color:var(--text-faint);}
+
+  /* ---------- RULES TABLE ---------- */
+  .rules-table{width:100%;border-collapse:collapse;font-size:14px;}
+  .rules-table th{text-align:left;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--text-faint);padding:16px 18px 12px;border-bottom:1px solid var(--line-2);font-weight:500;position:relative;}
+  .rules-table th.mono::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:var(--green);}
+  .rules-table th.mono.acc-red::before{background:var(--red);}
+  .rules-table th.mono.acc-gold::before{background:var(--gold);}
+  .rules-table td{padding:15px 18px;border-bottom:1px solid var(--line);color:var(--text-soft);transition:background .15s;}
+  .rules-table td:first-child{color:var(--text);font-weight:500;}
+  .rules-table td.mono,.rules-table th.mono{font-family:'IBM Plex Mono',monospace;}
+  .rules-table tr:last-child td{border-bottom:none;}
+  .rules-table tbody tr:hover td{background:var(--bg-2);}
+  .rules-table td.best{color:var(--gold);font-weight:600;}
+  .rules-table tr.guarantee-row td{background:var(--green-deep);color:var(--green-bright);font-weight:600;text-align:center;padding:16px;}
+  .rules-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--bg-1);}
+  .rules-wrap .rules-table{min-width:640px;}
+
+  /* ---------- TESTIMONIALS / REVIEWS (MODIFIED) ---------- */
+  .test-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  @media(max-width:800px){.test-grid{grid-template-columns:1fr;}}
+  .test-card{
+    background:var(--bg-1);border:1px solid var(--line);border-radius:12px;
+    padding:28px;transition:transform .2s ease, border-color .2s ease;
+    display:flex;flex-direction:column;justify-content:space-between;
+  }
+  .test-card:hover{
+    transform:translateY(-4px);border-color:var(--line-2);
+  }
+  .test-stars{color:var(--gold);font-size:14px;letter-spacing:2px;margin-bottom:14px;}
+  .test-card p{font-size:14.5px;color:var(--text-soft);margin-bottom:20px;line-height:1.6;}
+  .test-who{display:flex;align-items:center;gap:12px;}
+  .test-avatar{
+    width:40px;height:40px;border-radius:50%;background:var(--green-deep);
+    border:1px solid var(--green);display:flex;align-items:center;justify-content:center;
+    font-family:'Fraunces',serif;font-size:15px;color:var(--green-bright);
+  }
+  .test-who .name{font-size:14px;font-weight:600;color:var(--text);}
+  .test-who .loc{font-size:12px;color:var(--text-faint);}
+  .payout-tag{
+    margin-top:14px;padding:6px 12px;background:rgba(92,173,117,0.1);
+    border:1px solid var(--line-2);border-radius:4px;
+    font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--green-bright);
+    display:inline-flex;align-items:center;gap:6px;width:fit-content;
+  }
+
+  /* ---------- FAQ ---------- */
+  .faq-item{border-bottom:1px solid var(--line);}
+  .faq-q{padding:22px 0;display:flex;justify-content:space-between;align-items:center;cursor:pointer;font-size:15.5px;font-weight:500;}
+  .faq-q .plus{font-family:'IBM Plex Mono',monospace;font-size:18px;color:var(--text-faint);transition:transform .2s;}
+  .faq-item.open .plus{transform:rotate(45deg);color:var(--green-bright);}
+  .faq-a{max-height:0;overflow:hidden;transition:max-height .25s ease;}
+  .faq-item.open .faq-a{max-height:280px;}
+  .faq-a p{padding-bottom:22px;color:var(--text-soft);font-size:14.5px;max-width:640px;}
+
+  .contact-band{
+    margin-top:48px;background:var(--bg-2);border:1px solid var(--line-2);border-radius:10px;
+    padding:32px;display:flex;justify-content:space-between;align-items:center;gap:24px;flex-wrap:wrap;
+  }
+  .contact-band h3{font-family:'Fraunces',serif;font-weight:500;font-size:20px;margin-bottom:6px;}
+  .contact-band p{color:var(--text-soft);font-size:14px;}
+  .contact-actions{display:flex;gap:12px;flex-wrap:wrap;}
+
+  /* ---------- CTA BAND ---------- */
+  .cta-band{text-align:center;padding:110px 0;background:linear-gradient(180deg, var(--bg), var(--bg-1));position:relative;overflow:hidden;}
+  .cta-band::before{
+    content:"";position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+    width:820px;height:420px;
+    background:radial-gradient(ellipse at center, rgba(92,173,117,0.14), transparent 65%);
+    pointer-events:none;
+  }
+  .cta-watermark{position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);width:520px;height:520px;opacity:.05;pointer-events:none;}
+  .cta-band h2{font-family:'Fraunces',serif;font-weight:400;font-size:clamp(30px,4vw,46px);margin-bottom:18px;position:relative;}
+  .cta-band p{color:var(--text-soft);margin-bottom:30px;position:relative;}
+  .cta-chips{display:flex;justify-content:center;gap:12px;flex-wrap:wrap;margin-bottom:34px;position:relative;}
+  .cta-chip{display:flex;align-items:center;gap:7px;font-size:12.5px;color:var(--text-soft);background:var(--bg-1);border:1px solid var(--line-2);border-radius:20px;padding:7px 14px;}
+  .cta-chip .dot{width:5px;height:5px;border-radius:50%;background:var(--green-bright);}
+  .cta-actions-row{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;}
+
+  /* ---------- FOOTER ---------- */
+  footer{padding:64px 0 40px;border-top:1px solid var(--line);}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr 1fr;gap:40px;margin-bottom:48px;}
+  @media(max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+  .foot-col h4{font-size:12px;font-family:'IBM Plex Mono',monospace;text-transform:uppercase;letter-spacing:0.07em;color:var(--text-faint);margin-bottom:14px;}
+  .foot-col a,.foot-col p{display:block;font-size:13.5px;color:var(--text-soft);margin-bottom:9px;}
+  .foot-col a:hover{color:var(--green-bright);}
+  .foot-legal{border-top:1px solid var(--line);padding-top:24px;font-size:11.5px;color:var(--text-faint);line-height:1.7;display:flex;justify-content:space-between;gap:24px;flex-wrap:wrap;}
+  .foot-legal .disclaimer{max-width:640px;}
+
+  /* ---------- LIVE CHAT WIDGET ---------- */
+  .chat-fab{
+    position:fixed;bottom:26px;right:26px;width:56px;height:56px;border-radius:50%;
+    background:var(--green);color:#08110A;border:none;cursor:pointer;z-index:100;
+    display:flex;align-items:center;justify-content:center;
+    box-shadow:0 6px 20px rgba(0,0,0,0.4);transition:transform .2s;
+  }
+  .chat-fab:hover{transform:scale(1.06);}
+  .chat-panel{
+    position:fixed;bottom:96px;right:26px;width:300px;max-width:calc(100vw - 52px);
+    background:var(--bg-1);border:1px solid var(--line-2);border-radius:10px;
+    box-shadow:0 12px 40px rgba(0,0,0,0.5);z-index:100;
+    display:none;flex-direction:column;overflow:hidden;
+  }
+  .chat-panel.open{display:flex;}
+  .chat-head{padding:16px;background:var(--green-deep);display:flex;justify-content:space-between;align-items:center;}
+  .chat-head b{font-size:14px;}
+  .chat-head span{font-size:11.5px;color:var(--green-bright);}
+  .chat-close{background:none;border:none;color:var(--text-soft);cursor:pointer;font-size:16px;}
+  .chat-body{padding:16px;font-size:13.5px;color:var(--text-soft);}
+  .chat-bubble{background:var(--bg-2);border-radius:8px;padding:10px 12px;margin-bottom:8px;}
+  .chat-input-row{display:flex;border-top:1px solid var(--line);padding:10px;gap:8px;}
+  .chat-input-row input{flex:1;background:var(--bg-2);border:1px solid var(--line-2);border-radius:6px;color:var(--text);padding:8px 10px;font-size:13px;}
+  .chat-input-row button{background:var(--green);color:#08110A;border:none;border-radius:6px;padding:0 14px;font-weight:600;cursor:pointer;font-size:13px;}
+
+  .config-head-wrap{position:relative;margin-bottom:52px;}
+  .config-head-wrap::before{
+    content:"";position:absolute;top:-40px;left:-40px;width:340px;height:220px;
+    background:radial-gradient(ellipse at center, rgba(92,173,117,0.16), transparent 70%);
+    pointer-events:none;
+  }
+  .live-badge{display:inline-flex;align-items:center;gap:7px;font-family:'IBM Plex Mono',monospace;font-size:11px;text-transform:uppercase;letter-spacing:0.06em;color:var(--green-bright);background:var(--green-deep);border:1px solid var(--line-2);border-radius:20px;padding:5px 12px;margin-top:16px;}
+  .live-dot{width:6px;height:6px;border-radius:50%;background:var(--green-bright);animation:pulseDot 1.6s ease-in-out infinite;}
+  @keyframes pulseDot{0%,100%{opacity:1;box-shadow:0 0 0 0 rgba(127,203,150,0.5);}50%{opacity:.6;box-shadow:0 0 0 5px rgba(127,203,150,0);}}
+  ::selection{background:var(--green);color:#08110A;}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute;">
+  <symbol id="appleMark" viewBox="0 0 100 100">
+    <path class="half-l" d="M50 30 C48 30 38 16 25 21 C11 26 6 44 11 60 C16 76 32 92 50 92 Z"/>
+    <path class="half-r" d="M50 30 C52 30 62 16 75 21 C89 26 94 44 89 60 C84 76 68 92 50 92 Z"/>
+    <path class="stem" d="M50 30 C48 20 44 13 39 9" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path class="leaf" d="M50 16 C56 9 65 9 69 15 C64 20 56 20 50 16 Z"/>
+  </symbol>
+</svg>
+
+<div class="promo">Launch offer — <b>50% off</b> your first challenge, code <b>ROOT50</b></div>
+
+<header>
+  <div class="wrap nav">
+    <div class="logo"><svg class="apple-mark" width="24" height="24"><use href="#appleMark"/></svg>Fundedapple</div>
+    <nav class="navlinks">
+      <a href="#how">How it works</a>
+      <a href="#configurator">Challenges</a>
+      <a href="#platforms">Platforms</a>
+      <a href="#rules">Rules</a>
+      <a href="#faq">FAQ</a>
+    </nav>
+    <div class="navcta">
+      <a href="login.html" class="link-login">Log in</a>
+      <a href="#configurator" class="btn btn-primary">Get funded</a>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="wrap hero-inner">
+    <div class="eyebrow" style="justify-content:center;">Simulated funding · Real payouts</div>
+    <h1 class="reveal">Prove your edge.<br>Trade <em>our</em> capital.</h1>
+    <p class="lead reveal" style="animation-delay:.08s;">Fundedapple funds disciplined traders through a challenge process that's priced fairly, ruled clearly, and paid on schedule — up to $200,000 per account.</p>
+    <div class="hero-actions reveal" style="animation-delay:.16s;">
+      <a href="#configurator" class="btn btn-primary">Start your challenge</a>
+      <a href="#how" class="btn btn-ghost">See how it works</a>
+    </div>
+    <div class="hero-note reveal" style="animation-delay:.22s;">1-Step · 2-Step · Instant · Blitz — MT5, cTrader, TradeLocker, Match-Trader</div>
+
+    <div class="stat-row reveal" style="animation-delay:.3s;">
+      <div class="stat"><div class="sv mono" data-target="200000" data-prefix="$" data-suffix="+">$0</div><div class="sl">Max account size</div></div>
+      <div class="stat"><div class="sv mono" data-target="90" data-suffix="%">0</div><div class="sl">Max profit split</div></div>
+      <div class="stat"><div class="sv mono" data-target="12" data-suffix="hrs">0</div><div class="sl">Payout guarantee</div></div>
+      <div class="stat"><div class="sv mono" data-target="4" data-suffix="">0</div><div class="sl">Trading models</div></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding:0 0 40px;">
+  <div class="wrap">
+    <div class="guarantee-outer">
+      <div class="guarantee-band">
+        <div style="display:flex;align-items:center;gap:22px;">
+          <svg class="apple-mark g-mark" width="56" height="56"><use href="#appleMark"/></svg>
+          <div>
+            <div class="eyebrow" style="margin-bottom:8px;">Our promise</div>
+            <h3 style="font-family:'Fraunces',serif;font-weight:500;font-size:24px;color:var(--text);">Paid fast, or we pay <em style="color:var(--gold);font-style:italic;">you</em>.</h3>
+            <p style="color:var(--text-soft);font-size:14px;max-width:400px;margin-top:6px;">Request a payout on a funded account and we pay within our guaranteed window. Miss it, and the penalty is on us — automatically, no claim form.</p>
+          </div>
+        </div>
+        <div class="g-figures">
+          <div class="g-figure"><div class="gv green">12</div><div class="gl">hour payout</div></div>
+          <div class="g-divider"></div>
+          <div class="g-figure"><div class="gv red">$1,000</div><div class="gl">if we miss it</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- LIVE PAYOUT STREAM TICKER -->
+<div class="ticker-shell" id="payout-proof">
+  <div class="ticker-track">
+    <div class="tick-item"><span class="tdot"></span> <span class="name">David K. (UK)</span> <b>+$4,820.00</b> <span class="method">via Crypto (USDT)</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Arjun M. (India)</span> <b>+$2,150.00</b> <span class="method">via Rise</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Sven O. (Germany)</span> <b>+$9,400.00</b> <span class="method">via Bank Wire</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Mateo R. (Spain)</span> <b>+$1,750.00</b> <span class="method">via Crypto (USDT)</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Lucas P. (Brazil)</span> <b>+$6,300.00</b> <span class="method">via Rise</span></div>
+    <!-- Duplicated for seamless infinite scrolling loop -->
+    <div class="tick-item"><span class="tdot"></span> <span class="name">David K. (UK)</span> <b>+$4,820.00</b> <span class="method">via Crypto (USDT)</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Arjun M. (India)</span> <b>+$2,150.00</b> <span class="method">via Rise</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Sven O. (Germany)</span> <b>+$9,400.00</b> <span class="method">via Bank Wire</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Mateo R. (Spain)</span> <b>+$1,750.00</b> <span class="method">via Crypto (USDT)</span></div>
+    <div class="tick-item"><span class="tdot"></span> <span class="name">Lucas P. (Brazil)</span> <b>+$6,300.00</b> <span class="method">via Rise</span></div>
+  </div>
+</div>
+
+<!-- PROCESS SECTION (MODIFIED & ENHANCED) -->
+<section id="how">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="eyebrow" style="justify-content:center;">Simple & Transparent</div>
+      <h2>From challenge to payout.</h2>
+      <p>Three straightforward steps designed to evaluate your strategy, fund your edge, and reward your consistency.</p>
+    </div>
+    <div class="steps-grid-new">
+      <div class="step-card-new">
+        <div class="step-head-row">
+          <span class="step-num-badge">STEP 01</span>
+          <div class="step-icon">🎯</div>
+        </div>
+        <h3>Pass the Challenge</h3>
+        <p>Choose your account size and hit the profit target while keeping within daily loss limits. Trade at your own pace with unlimited time limits on main tracks.</p>
+        <div class="step-feature-tag">100% Refundable Evaluation Fee</div>
+      </div>
+      
+      <div class="step-card-new">
+        <div class="step-head-row">
+          <span class="step-num-badge">STEP 02</span>
+          <div class="step-icon">💼</div>
+        </div>
+        <h3>Get Verified & Funded</h3>
+        <p>Complete a quick identity check and receive your official Fundedapple simulated account loaded with firm capital. Same exact rules, zero hidden parameters.</p>
+        <div class="step-feature-tag">Up to $200,000 Live Balance</div>
+      </div>
+      
+      <div class="step-card-new">
+        <div class="step-head-row">
+          <span class="step-num-badge">STEP 03</span>
+          <div class="step-icon">💸</div>
+        </div>
+        <h3>Request & Recieve Payout</h3>
+        <p>Request your profits bi-weekly or on scheduled dates. Enjoy up to a 90% profit split sent straight to your bank account or crypto wallet.</p>
+        <div class="step-feature-tag">Backed by 12-Hour Guarantee</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="configurator">
+  <div class="wrap">
+    <div class="sec-head config-head-wrap">
+      <div class="eyebrow">Build your challenge</div>
+      <h2>Pick a model, pick a size.</h2>
+      <p>Every model carries the same 12-hour payout guarantee. Rules and pricing below are exactly what you trade under.</p>
+      <div class="live-badge"><span class="live-dot"></span>Live pricing — updates as you switch models</div>
+    </div>
+
+    <div class="config-outer" id="configOuter">
+      <div class="config">
+        <div class="config-tabs" id="configTabs">
+          <div class="config-tab active" data-track="two">2-Step<span class="ctag">Balanced</span></div>
+          <div class="config-tab" data-track="one">1-Step<span class="ctag">Straightforward</span></div>
+          <div class="config-tab" data-track="blitz">Blitz<span class="ctag">3-day sprint</span></div>
+          <div class="config-tab" data-track="instant">Instant<span class="ctag">Skip the challenge</span></div>
+        </div>
+        <div class="config-body">
+          <svg class="apple-mark config-watermark" viewBox="0 0 100 100"><use href="#appleMark"/></svg>
+          <div>
+            <div class="config-label">Account size</div>
+            <div class="size-grid" id="sizeGrid"></div>
+            <div class="config-label">Trading platform</div>
+            <div class="size-grid">
+              <div class="size-chip active">MT5</div>
+              <div class="size-chip">cTrader</div>
+              <div class="size-chip">TradeLocker</div>
+              <div class="size-chip">Match-Trader</div>
+            </div>
+          </div>
+          <div>
+            <div class="rule-list" id="ruleList"></div>
+            <div class="price-block">
+              <div><div class="pv mono" id="priceOut">$149</div><div class="pn" id="priceNote">one-time, 100% refundable on first payout</div></div>
+              <a href="checkout.html" id="getFundedBtn" class="btn btn-primary">Get funded</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="platforms">
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="eyebrow" style="justify-content:center;">Trade your way</div>
+      <h2>Trade on your favorite platform.</h2>
+      <p>Every rule engine runs identically across all four platforms — pick whichever fits your setup.</p>
+    </div>
+    <div class="plat-grid">
+      <div class="plat-card"><div class="plat-badge">MT5</div><h4>MetaTrader 5</h4><p>The industry standard. EAs, indicators, full order book.</p></div>
+      <div class="plat-card"><div class="plat-badge">cT</div><h4>cTrader</h4><p>Depth-of-market view with fast native execution.</p></div>
+      <div class="plat-card"><div class="plat-badge">TL</div><h4>TradeLocker</h4><p>Lightweight browser platform, zero install needed.</p></div>
+      <div class="plat-card"><div class="plat-badge">MT</div><h4>Match-Trader</h4><p>Clean modern interface built for multi-asset trading.</p></div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="rules">
+  <div class="wrap">
+    <div class="sec-head">
+      <div class="eyebrow">Written down, not buried</div>
+      <h2>Every rule, in one table.</h2>
+      <p>The exact numbers our own risk desk evaluates every account against, across all four models.</p>
+    </div>
+    <div class="rules-wrap">
+      <table class="rules-table">
+        <thead><tr><th>Rule</th><th class="mono">2-Step · P1</th><th class="mono">2-Step · P2</th><th class="mono">1-Step</th><th class="mono acc-red">Blitz</th><th class="mono acc-gold">Instant</th></tr></thead>
+        <tbody>
+          <tr><td>Profit target</td><td class="mono">8%</td><td class="mono">5%</td><td class="mono">10%</td><td class="mono">6% in 3 days</td><td class="mono best">No challenge</td></tr>
+          <tr><td>Max daily loss</td><td class="mono">5%</td><td class="mono">5%</td><td class="mono">4%</td><td class="mono">4%</td><td class="mono">3%</td></tr>
+          <tr><td>Max overall drawdown</td><td class="mono best">10%</td><td class="mono best">10%</td><td class="mono">6%</td><td class="mono">8%</td><td class="mono">5%</td></tr>
+          <tr><td>Minimum trading days</td><td class="mono">4</td><td class="mono">4</td><td class="mono">4</td><td class="mono best">2</td><td class="mono">—</td></tr>
+          <tr><td>Time limit</td><td class="mono">None</td><td class="mono">None</td><td class="mono">None</td><td class="mono">3 days</td><td class="mono">None</td></tr>
+          <tr><td>Weekend holding</td><td class="mono">Allowed</td><td class="mono">Allowed</td><td class="mono">Allowed</td><td class="mono">Allowed</td><td class="mono">Allowed</td></tr>
+          <tr><td>News trading</td><td class="mono">Allowed</td><td class="mono">Allowed</td><td class="mono">Restricted</td><td class="mono">Allowed</td><td class="mono">Restricted</td></tr>
+          <tr><td>Starting profit split</td><td class="mono">—</td><td class="mono">—</td><td class="mono">80%</td><td class="mono best">Up to 85%</td><td class="mono">75%</td></tr>
+          <tr class="guarantee-row"><td colspan="6">12-hour payout guarantee — or $1,000 to you. Every model, every account size.</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<!-- REVIEWS & TESTIMONIALS SECTION (ADDED PREVIEW CARDS) -->
+<section>
+  <div class="wrap">
+    <div class="sec-head center">
+      <div class="eyebrow" style="justify-content:center;">Trader Feedback</div>
+      <h2>What funded traders say.</h2>
+      <p>Real experiences from traders who passed the evaluation and received their payouts on time.</p>
+    </div>
+    <div class="test-grid">
+      <div class="test-card">
+        <div>
+          <div class="test-stars">★★★★★</div>
+          <p>"The 12-hour payout guarantee isn't marketing hype. I requested my payout at 10 AM and received USDT in my wallet before 4 PM. Best prop firm experience so far."</p>
+        </div>
+        <div>
+          <div class="test-who">
+            <div class="test-avatar">DK</div>
+            <div>
+              <div class="name">David K.</div>
+              <div class="loc">London, UK</div>
+            </div>
+          </div>
+          <div class="payout-tag">Total Payout: $4,820.00</div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div>
+          <div class="test-stars">★★★★★</div>
+          <p>"Passed the 2-Step $50k account. Execution speeds on MT5 were flawless with zero slippage during high liquidity sessions. Spreads are super competitive."</p>
+        </div>
+        <div>
+          <div class="test-who">
+            <div class="test-avatar">AM</div>
+            <div>
+              <div class="name">Arjun M.</div>
+              <div class="loc">Mumbai, India</div>
+            </div>
+          </div>
+          <div class="payout-tag">Total Payout: $2,150.00</div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <div>
+          <div class="test-stars">★★★★★</div>
+          <p>"I was skeptical about prop firms until I tried Fundedapple. Transparent rules with no hidden slippage clauses. Got my fee refunded on my very first payout!"</p>
+        </div>
+        <div>
+          <div class="test-who">
+            <div class="test-avatar">SO</div>
+            <div>
+              <div class="name">Sven O.</div>
+              <div class="loc">Berlin, Germany</div>
+            </div>
+          </div>
+          <div class="payout-tag">Total Payout: $9,400.00</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="alt" id="faq">
+  <div class="wrap" style="max-width:800px;">
+    <div class="sec-head">
+      <div class="eyebrow">Questions</div>
+      <h2>Before you start.</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item open"><div class="faq-q" onclick="toggleFaq(this)"><span>How does the 12-hour payout guarantee work?</span><span class="plus">+</span></div><div class="faq-a"><p>The clock starts once your payout request passes verification. If funds aren't in your account within 12 hours after that, we credit you $1,000 in addition to your payout — automatically, without you needing to file a claim.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>How fast are payouts processed?</span><span class="plus">+</span></div><div class="faq-a"><p>Payout requests are processed within 24–48 hours on your scheduled payout date, straight to your linked account.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>What happens if I breach a rule?</span><span class="plus">+</span></div><div class="faq-a"><p>The account closes at the breach point — no partial credit, no extra fees. You can restart a fresh challenge anytime.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Is my evaluation fee refundable?</span><span class="plus">+</span></div><div class="faq-a"><p>Yes. Your fee is credited back with your first successful payout on the funded account.</p></div></div>
+      <div class="faq-item"><div class="faq-q" onclick="toggleFaq(this)"><span>Which platforms can I trade on?</span><span class="plus">+</span></div><div class="faq-a"><p>MT5, cTrader, TradeLocker, and Match-Trader are all supported, with the same rule engine enforced across every one.</p></div></div>
+    </div>
+
+    <div class="contact-band">
+      <div>
+        <h3>Still have questions?</h3>
+        <p>Message us and we'll get back to you by email — chat with us or drop a line.</p>
+      </div>
+      <div class="contact-actions">
+        <a href="#" class="btn btn-primary" onclick="openChat();return false;">Start live chat</a>
+        <a href="mailto:support@fundedapple.com" class="btn btn-ghost">Email support</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cta-band">
+  <svg class="apple-mark cta-watermark" viewBox="0 0 100 100"><use href="#appleMark"/></svg>
+  <div class="wrap">
+    <h2 class="display">Your first funded account starts today.</h2>
+    <p>No subscriptions. No hidden clauses. Just a challenge, and capital when you pass it.</p>
+    <div class="cta-chips">
+      <div class="cta-chip"><span class="dot"></span>12-hour payout guarantee</div>
+      <div class="cta-chip"><span class="dot"></span>Fee refunded on your first payout</div>
+      <div class="cta-chip"><span class="dot"></span>Rules published upfront, never hidden</div>
+    </div>
+    <div class="cta-actions-row">
+      <a href="#configurator" class="btn btn-primary">Start your challenge</a>
+      <a href="#rules" class="btn btn-ghost">Read the rules first</a>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-col">
+        <div class="logo" style="margin-bottom:12px;"><svg class="apple-mark" width="22" height="22"><use href="#appleMark"/></svg>Fundedapple</div>
+        <p style="max-width:280px;">Funded accounts for traders who can prove it, backed by rules published before you ever pay.</p>
+      </div>
+      <div class="foot-col"><h4>Product</h4><a href="#how">How it works</a><a href="#configurator">Challenges</a><a href="#platforms">Platforms</a><a href="#rules">Rules</a></div>
+      <div class="foot-col"><h4>Company</h4><a href="#payout-proof">Payout proof</a><a href="mailto:support@fundedapple.com">Contact</a></div>
+      <div class="foot-col"><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Refund policy</a><a href="#">Risk disclosure</a></div>
+    </div>
+    <div class="foot-legal" style="flex-direction:column;align-items:flex-start;gap:14px;">
+      <span>© 2026 Fundedapple. All rights reserved.</span>
+      <span class="disclaimer">Fundedapple provides access to simulated evaluation accounts for the assessment of trading skill; funded accounts trade with company capital, not client deposits. Trading involves substantial risk. Past performance is not indicative of future results.</span>
+    </div>
+  </div>
+</footer>
+
+<button class="chat-fab" onclick="openChat()" aria-label="Open live chat">
+  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg>
+</button>
+<div class="chat-panel" id="chatPanel">
+  <div class="chat-head"><div><b>Fundedapple support</b><br><span>Replies by email</span></div><button class="chat-close" onclick="closeChat()">✕</button></div>
+  <div class="chat-body">
+    <div class="chat-bubble">Hi! Drop your question here and we will get back to you immediately.</div>
+  </div>
+  <div class="chat-input-row"><input type="text" id="chatMsgInput" placeholder="Type your message..."><button onclick="sendChatAsEmail()">Send</button></div>
+</div>
+
+<script>
+  function sendChatAsEmail(){
+    const input = document.getElementById('chatMsgInput');
+    const msg = encodeURIComponent(input.value || '');
+    window.location.href = `mailto:support@fundedapple.com?subject=Question%20from%20site%20chat&body=${msg}`;
+  }
+
+  function animateCounters(){
+    document.querySelectorAll('[data-target]').forEach(el=>{
+      const target = parseFloat(el.dataset.target);
+      const prefix = el.dataset.prefix || '';
+      const suffix = el.dataset.suffix || '';
+      const dur = 1400;
+      const start = performance.now();
+      function tick(now){
+        const p = Math.min(1,(now-start)/dur);
+        const eased = 1 - Math.pow(1-p,3);
+        const val = Math.floor(target*eased);
+        el.textContent = prefix + val.toLocaleString() + suffix;
+        if(p<1) requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+  }
+  const heroObserver = new IntersectionObserver((entries)=>{
+    entries.forEach(e=>{ if(e.isIntersecting){ animateCounters(); heroObserver.disconnect(); } });
+  },{threshold:0.4});
+  heroObserver.observe(document.querySelector('.stat-row'));
+
+  const tabs = document.querySelectorAll('.config-tab');
+  const configOuter = document.getElementById('configOuter');
+  let currentTrack = 'two';
+  let currentSize = 25000;
+  const sizesByTrack = {
+    two:[5000,10000,25000,50000,100000,200000],
+    one:[5000,10000,25000,50000,100000,200000],
+    blitz:[5000,10000,25000,50000,100000],
+    instant:[5000,10000,25000,50000]
+  };
+  const rulesByTrack = {
+    two:{target:'8% / 5%',daily:'5%',dd:'10%',days:'4 min',news:'Allowed',split:'Up to 90%'},
+    one:{target:'10%',daily:'4%',dd:'6%',days:'4 min',news:'Restricted',split:'80% start'},
+    blitz:{target:'6% in 3 days',daily:'4%',dd:'8%',days:'2 min',news:'Allowed',split:'Up to 85%'},
+    instant:{target:'No challenge',daily:'3%',dd:'5%',days:'—',news:'Restricted',split:'75% start'}
+  };
+  const priceMap = {5000:39,10000:69,25000:149,50000:249,100000:449,200000:849};
+  const trackMultiplier = {two:1,one:0.9,blitz:1.15,instant:1.8};
+  const hotTracks = ['blitz','instant'];
+
+  function renderSizes(){
+    const grid = document.getElementById('sizeGrid');
+    grid.classList.toggle('hot', hotTracks.includes(currentTrack));
+    grid.innerHTML = '';
+    sizesByTrack[currentTrack].forEach(size=>{
+      const chip = document.createElement('div');
+      chip.className = 'size-chip' + (size===currentSize ? ' active' : '');
+      chip.textContent = '$' + size.toLocaleString();
+      chip.onclick = ()=>{ currentSize = size; renderSizes(); renderRules(); };
+      grid.appendChild(chip);
+    });
+  }
+  function renderRules(){
+    const r = rulesByTrack[currentTrack];
+    document.getElementById('ruleList').innerHTML = `
+      <div class="rule-row"><span class="rl">Profit target</span><span class="rv">${r.target}</span></div>
+      <div class="rule-row"><span class="rl">Max daily loss</span><span class="rv">${r.daily}</span></div>
+      <div class="rule-row"><span class="rl">Max drawdown</span><span class="rv">${r.dd}</span></div>
+      <div class="rule-row"><span class="rl">Min trading days</span><span class="rv">${r.days}</span></div>
+      <div class="rule-row"><span class="rl">News trading</span><span class="rv">${r.news}</span></div>
+      <div class="rule-row"><span class="rl">Profit split</span><span class="rv">${r.split}</span></div>
+    `;
+    const price = Math.round((priceMap[currentSize]||149) * (trackMultiplier[currentTrack]||1));
+    const priceEl = document.getElementById('priceOut');
+    priceEl.textContent = '$' + price;
+    const isHot = hotTracks.includes(currentTrack);
+    priceEl.classList.toggle('hot', isHot);
+    configOuter.classList.toggle('hot', isHot);
+    document.getElementById('priceNote').textContent = currentTrack==='instant'
+      ? 'one-time activation fee, non-refundable'
+      : 'one-time, 100% refundable on first payout';
+    const btn = document.getElementById('getFundedBtn');
+    if(btn){ btn.href = `checkout.html?track=${currentTrack}&size=${currentSize}&price=${price}`; }
+  }
+  tabs.forEach(tab=>{
+    tab.onclick = ()=>{
+      tabs.forEach(t=>{t.classList.remove('active');t.classList.remove('tab-hot');});
+      tab.classList.add('active');
+      currentTrack = tab.dataset.track;
+      if(hotTracks.includes(currentTrack)) tab.classList.add('tab-hot');
+      if(!sizesByTrack[currentTrack].includes(currentSize)) currentSize = sizesByTrack[currentTrack][2] || sizesByTrack[currentTrack][0];
+      renderSizes(); renderRules();
+    };
+  });
+  renderSizes(); renderRules();
+
+  function toggleFaq(el){
+    const item = el.parentElement;
+    const wasOpen = item.classList.contains('open');
+    document.querySelectorAll('.faq-item').forEach(i=>i.classList.remove('open'));
+    if(!wasOpen) item.classList.add('open');
+  }
+
+  function openChat(){ document.getElementById('chatPanel').classList.add('open'); }
+  function closeChat(){ document.getElementById('chatPanel').classList.remove('open'); }
+</script>
+
+</body>
+</html>

@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Complete your order — Fundedapple</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  >
+
+  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+
+  <style>
+
+    /* =====================================================
+       ROOT
+    ===================================================== */
+
+    :root {
+      --bg: #070a08;
+      --surface: #0e1411;
+      --surface-2: #111914;
+
+      --card-bg: rgba(18, 26, 22, 0.68);
+      --card-border: rgba(255, 255, 255, 0.08);
+
+      --text: #f0f4f1;
+      --text-soft: #9ea8a1;
+
+      --green: #7fcb96;
+      --green-light: #91dfa8;
+
+      --green-glow: rgba(127, 203, 150, 0.20);
+      --green-dark: rgba(127, 203, 150, 0.08);
+    }
+
+
+    /* =====================================================
+       RESET
+    ===================================================== */
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+
+      font-family:
+        'Inter',
+        -apple-system,
+        BlinkMacSystemFont,
+        sans-serif;
+
+      background:
+        radial-gradient(
+          circle at 50% 0%,
+          rgba(127, 203, 150, 0.075),
+          transparent 52%
+        ),
+        radial-gradient(
+          circle at 100% 100%,
+          rgba(127, 203, 150, 0.035),
+          transparent 45%
+        ),
+        var(--bg);
+
+      color: var(--text);
+
+      -webkit-font-smoothing: antialiased;
+    }
+
+
+    a {
+      color: inherit;
+    }
+
+
+    button,
+    input {
+      font: inherit;
+    }
+
+
+    .wrap {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+    }
+
+
+    /* =====================================================
+       HEADER
+    ===================================================== */
+
+    .payment-top {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+
+      border-bottom:
+        1px solid rgba(255, 255, 255, 0.07);
+
+      background:
+        rgba(7, 10, 8, 0.88);
+
+      backdrop-filter: blur(18px);
+    }
+
+
+    .payment-nav {
+      min-height: 72px;
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+    }
+
+
+    .payment-brand {
+      display: inline-flex;
+      align-items: center;
+
+      gap: 10px;
+
+      color: #fff;
+      text-decoration: none;
+
+      font-size: 17px;
+      font-weight: 700;
+    }
+
+
+    .payment-brand img {
+      width: 30px;
+      height: 30px;
+
+      object-fit: contain;
+
+      filter:
+        drop-shadow(
+          0 0 9px
+          rgba(127, 203, 150, 0.38)
+        );
+    }
+
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+
+      gap: 7px;
+
+      padding: 7px 12px;
+
+      border-radius: 8px;
+
+      color: var(--text-soft);
+
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 500;
+
+      transition: 0.2s ease;
+    }
+
+
+    .back-link:hover {
+      color: #fff;
+
+      background:
+        rgba(255, 255, 255, 0.04);
+    }
+
+
+    /* =====================================================
+       MAIN
+    ===================================================== */
+
+    .payment-main {
+      padding: 55px 0 90px;
+    }
+
+
+    .payment-heading {
+      max-width: 700px;
+
+      margin:
+        0 auto 42px;
+
+      text-align: center;
+    }
+
+
+    .eyebrow {
+      display: inline-flex;
+
+      align-items: center;
+
+      margin-bottom: 13px;
+
+      padding: 6px 14px;
+
+      border:
+        1px solid
+        rgba(127, 203, 150, 0.25);
+
+      border-radius: 999px;
+
+      background:
+        rgba(127, 203, 150, 0.08);
+
+      color: var(--green);
+
+      font-size: 10px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+      letter-spacing: 0.09em;
+    }
+
+
+    .payment-heading h1 {
+      margin: 0 0 13px;
+
+      font-family: 'Fraunces', serif;
+
+      font-size:
+        clamp(34px, 5vw, 50px);
+
+      line-height: 1.08;
+
+      font-weight: 500;
+
+      letter-spacing: -0.025em;
+
+      background:
+        linear-gradient(
+          180deg,
+          #ffffff 0%,
+          #cdd7cf 100%
+        );
+
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+
+    .payment-heading p {
+      margin: 0 auto;
+
+      max-width: 580px;
+
+      color: var(--text-soft);
+
+      font-size: 14px;
+
+      line-height: 1.65;
+    }
+
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+
+    .payment-layout {
+      display: grid;
+
+      grid-template-columns:
+        minmax(0, 1.35fr)
+        minmax(340px, 0.75fr);
+
+      gap: 28px;
+
+      align-items: start;
+    }
+
+
+    /* =====================================================
+       LEFT
+    ===================================================== */
+
+    .payment-left {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 20px;
+    }
+
+
+    .payment-card {
+      position: relative;
+
+      padding: 24px;
+
+      border:
+        1px solid
+        var(--card-border);
+
+      border-radius: 17px;
+
+      background:
+        linear-gradient(
+          145deg,
+          rgba(22, 31, 26, 0.72),
+          rgba(13, 19, 16, 0.64)
+        );
+
+      backdrop-filter: blur(14px);
+
+      box-shadow:
+        0 18px 40px
+        rgba(0, 0, 0, 0.24);
+    }
+
+
+    .payment-card-title {
+      display: flex;
+      align-items: center;
+
+      gap: 9px;
+
+      margin-bottom: 20px;
+
+      color: var(--text-soft);
+
+      font-size: 11px;
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.08em;
+    }
+
+
+    .payment-card-title::before {
+      content: '';
+
+      width: 6px;
+      height: 6px;
+
+      border-radius: 50%;
+
+      background: var(--green);
+
+      box-shadow:
+        0 0 9px
+        var(--green);
+    }
+
+
+    /* =====================================================
+       SELECTED PLAN
+    ===================================================== */
+
+    .selected-plan {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      padding: 18px;
+
+      border:
+        1px solid
+        rgba(127, 203, 150, 0.20);
+
+      border-radius: 13px;
+
+      background:
+        linear-gradient(
+          135deg,
+          rgba(127, 203, 150, 0.10),
+          rgba(127, 203, 150, 0.025)
+        );
+    }
+
+
+    .selected-plan-left {
+      min-width: 0;
+    }
+
+
+    .selected-plan-name {
+      margin-bottom: 5px;
+
+      color: #fff;
+
+      font-family: 'Fraunces', serif;
+
+      font-size: 22px;
+
+      font-weight: 500;
+    }
+
+
+    .selected-plan-account {
+      color: var(--green);
+
+      font-family:
+        "IBM Plex Mono",
+        monospace;
+
+      font-size: 12px;
+
+      font-weight: 600;
+    }
+
+
+    .selected-plan-badge {
+      flex-shrink: 0;
+
+      padding: 6px 10px;
+
+      border:
+        1px solid
+        rgba(127, 203, 150, 0.24);
+
+      border-radius: 7px;
+
+      background:
+        rgba(127, 203, 150, 0.08);
+
+      color: var(--green);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.06em;
+    }
+
+
+    /* =====================================================
+       CONFIGURATION ROWS
+    ===================================================== */
+
+    .configuration-list {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 0;
+    }
+
+
+    .configuration-row {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 20px;
+
+      min-height: 55px;
+
+      border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.055);
+    }
+
+
+    .configuration-row:last-child {
+      border-bottom: 0;
+    }
+
+
+    .configuration-label {
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      font-weight: 500;
+    }
+
+
+    .configuration-value {
+      color: #fff;
+
+      font-size: 13px;
+
+      font-weight: 600;
+
+      text-align: right;
+    }
+
+
+    /* =====================================================
+       ADDONS
+    ===================================================== */
+
+    .addon-summary-list {
+      display: flex;
+
+      flex-direction: column;
+
+      gap: 9px;
+    }
+
+
+    .addon-summary-item {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 12px 14px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.06);
+
+      border-radius: 9px;
+
+      background:
+        rgba(255, 255, 255, 0.018);
+    }
+
+
+    .addon-summary-name {
+      color: #fff;
+
+      font-size: 12px;
+
+      font-weight: 600;
+    }
+
+
+    .addon-summary-price {
+      flex-shrink: 0;
+
+      color: var(--green);
+
+      font-family:
+        "IBM Plex Mono",
+        monospace;
+
+      font-size: 11px;
+
+      font-weight: 600;
+    }
+
+
+    .no-addons {
+      padding: 14px;
+
+      border:
+        1px dashed
+        rgba(255, 255, 255, 0.10);
+
+      border-radius: 9px;
+
+      color: var(--text-soft);
+
+      font-size: 12px;
+
+      text-align: center;
+    }
+
+
+    /* =====================================================
+       SECURITY NOTE
+    ===================================================== */
+
+    .secure-note {
+      display: flex;
+
+      align-items: center;
+
+      gap: 12px;
+
+      color: var(--text-soft);
+
+      font-size: 11px;
+
+      line-height: 1.5;
+    }
+
+
+    .secure-icon {
+      width: 34px;
+      height: 34px;
+
+      flex: 0 0 34px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      border:
+        1px solid
+        rgba(127, 203, 150, 0.18);
+
+      border-radius: 9px;
+
+      background:
+        rgba(127, 203, 150, 0.07);
+
+      color: var(--green);
+
+      font-size: 15px;
+    }
+
+
+    /* =====================================================
+       RIGHT SUMMARY
+    ===================================================== */
+
+    .payment-summary {
+      position: sticky;
+
+      top: 96px;
+
+      overflow: hidden;
+
+      border:
+        1px solid
+        rgba(127, 203, 150, 0.25);
+
+      border-radius: 18px;
+
+      background:
+        rgba(14, 20, 16, 0.80);
+
+      backdrop-filter: blur(18px);
+
+      box-shadow:
+        0 22px 55px
+        rgba(0, 0, 0, 0.42),
+        0 0 30px
+        rgba(127, 203, 150, 0.045);
+    }
+
+
+    .payment-summary::before {
+      content: '';
+
+      display: block;
+
+      height: 3px;
+
+      width: 100%;
+
+      background:
+        linear-gradient(
+          90deg,
+          var(--green),
+          rgba(127, 203, 150, 0.25)
+        );
+    }
+
+
+    .summary-top {
+      padding: 25px 24px 20px;
+
+      border-bottom:
+        1px solid
+        rgba(255, 255, 255, 0.07);
+    }
+
+
+    .summary-kicker {
+      color: var(--text-soft);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.09em;
+    }
+
+
+    .summary-plan-name {
+      margin-top: 8px;
+
+      color: #fff;
+
+      font-family: 'Fraunces', serif;
+
+      font-size: 24px;
+
+      font-weight: 500;
+    }
+
+
+    .summary-account-name {
+      margin-top: 4px;
+
+      color: var(--green);
+
+      font-family:
+        "IBM Plex Mono",
+        monospace;
+
+      font-size: 11px;
+
+      font-weight: 600;
+    }
+
+
+    /* =====================================================
+       PRICE BREAKDOWN
+    ===================================================== */
+
+    .price-breakdown {
+      padding: 16px 24px 5px;
+    }
+
+
+    .price-row {
+      display: flex;
+
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 8px 0;
+
+      font-size: 12px;
+    }
+
+
+    .price-row span:first-child {
+      color: var(--text-soft);
+    }
+
+
+    .price-row span:last-child {
+      color: #fff;
+
+      font-weight: 600;
+    }
+
+
+    .price-row.addon-row span:last-child {
+      color: var(--green);
+    }
+
+
+    /* =====================================================
+       TOTAL
+    ===================================================== */
+
+    .final-total {
+      display: flex;
+
+      align-items: flex-end;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      margin: 10px 24px 0;
+
+      padding: 18px 0;
+
+      border-top:
+        1px solid
+        rgba(255, 255, 255, 0.09);
+    }
+
+
+    .final-total-label {
+      color: var(--text-soft);
+
+      font-size: 10px;
+
+      font-weight: 700;
+
+      text-transform: uppercase;
+
+      letter-spacing: 0.08em;
+    }
+
+
+    .final-total-price {
+      color: #fff;
+
+      font-family:
+        "IBM Plex Mono",
+        monospace;
+
+      font-size: 28px;
+
+      font-weight: 700;
+    }
+
+
+    /* =====================================================
+       ACTION
+    ===================================================== */
+
+    .payment-action {
+      padding: 0 24px 24px;
+    }
+
+
+    .pay-button {
+      width: 100%;
+
+      min-height: 54px;
+
+      display: flex;
+
+      align-items: center;
+      justify-content: center;
+
+      gap: 10px;
+
+      border: 0;
+
+      border-radius: 10px;
+
+      background: var(--green);
+
+      color: #070a08;
+
+      font-size: 14px;
+
+      font-weight: 700;
+
+      cursor: pointer;
+
+      transition:
+        transform 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+
+      box-shadow:
+        0 9px 24px
+        rgba(127, 203, 150, 0.20);
+    }
+
+
+    .pay-button:hover {
+      transform: translateY(-2px);
+
+      background: var(--green-light);
+
+      box-shadow:
+        0 13px 30px
+        rgba(127, 203, 150, 0.32);
+    }
+
+
+    .pay-button:active {
+      transform: translateY(0);
+    }
+
+
+    .payment-note {
+      margin-top: 12px;
+
+      color: var(--text-soft);
+
+      font-size: 10px;
+
+      line-height: 1.5;
+
+      text-align: center;
+    }
+
+
+    /* =====================================================
+       EMPTY / INVALID CONFIGURATION
+    ===================================================== */
+
+    .invalid-state {
+      max-width: 600px;
+
+      margin: 80px auto;
+
+      padding: 35px;
+
+      border:
+        1px solid
+        rgba(255, 255, 255, 0.08);
+
+      border-radius: 18px;
+
+      background:
+        rgba(18, 26, 22, 0.65);
+
+      text-align: center;
+    }
+
+
+    .invalid-state h2 {
+      margin: 0 0 10px;
+
+      font-family: 'Fraunces', serif;
+
+      font-size: 28px;
+
+      font-weight: 500;
+    }
+
+
+    .invalid-state p {
+      margin: 0 0 22px;
+
+      color: var(--text-soft);
+
+      font-size: 13px;
+
+      line-height: 1.6;
+    }
+
+
+    .invalid-back {
+      display: inline-flex;
+
+      align-items: center;
+      justify-content: center;
+
+      min-height: 44px;
+
+      padding: 0 18px;
+
+      border-radius: 9px;
+
+      background: var(--green);
+
+      color: #070a08;
+
+      text-decoration: none;
+
+      font-size: 13px;
+
+      font-weight: 700;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+
+    @media (max-width: 900px) {
+
+      .payment-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .payment-summary {
+        position: relative;
+        top: auto;
+      }
+
+    }
+
+
+    @media (max-width: 600px) {
+
+      .wrap {
+        width: min(
+          100% - 30px,
+          1160px
+        );
+      }
+
+
+      .payment-main {
+        padding-top: 38px;
+      }
+
+
+      .payment-heading {
+        margin-bottom: 30px;
+      }
+
+
+      .payment-card {
+        padding: 18px;
+      }
+
+
+      .selected-plan {
+        align-items: flex-start;
+      }
+
+
+      .selected-plan-badge {
+        display: none;
+      }
+
+
+      .payment-nav {
+        min-height: 64px;
+      }
+
+
+      .payment-brand {
+        font-size: 15px;
+      }
+
+
+      .back-link {
+        font-size: 11px;
+        padding: 6px;
+      }
+
+    }
+
+  </style>
+  <link rel="stylesheet" href="css/flow-polish.css">
+</head>
+
+
+<body class="payment-page">
+
+  <!-- =====================================================
+       HEADER
+  ===================================================== -->
+
+  <header class="payment-top">
+
+    <div class="wrap payment-nav">
+
+      <a
+        href="index.html"
+        class="payment-brand"
+      >
+
+        <img
+          src="assets/logo-mark.png"
+          alt="Fundedapple logo"
+        >
+
+        Fundedapple
+
+      </a>
+
+
+      <a
+        href="checkout.html"
+        class="back-link"
+      >
+        ← Back to checkout
+      </a>
+
+    </div>
+
+  </header>
+
+
+  <!-- =====================================================
+       MAIN
+  ===================================================== -->
+
+  <main class="payment-main">
+
+    <div class="wrap">
+
+      <div class="payment-heading">
+
+        <div class="eyebrow">
+          Final review
+        </div>
+
+        <h1>
+          Complete your order
+        </h1>
+
+        <p>
+          Review your selected trading plan and order details before continuing.
+        </p>
+
+      </div>
+
+
+      <!-- =================================================
+           INVALID STATE
+      ================================================= -->
+
+      <div
+        class="invalid-state"
+        id="invalidState"
+        style="display:none;"
+      >
+
+        <h2>
+          No trading plan selected
+        </h2>
+
+        <p>
+          Your checkout configuration could not be found.
+          Please return to the checkout page and select your plan again.
+        </p>
+
+        <a
+          href="checkout.html"
+          class="invalid-back"
+        >
+          Back to checkout
+        </a>
+
+      </div>
+
+
+      <!-- =================================================
+           PAYMENT LAYOUT
+      ================================================= -->
+
+      <div
+        class="payment-layout"
+        id="paymentLayout"
+      >
+
+
+        <!-- ===============================================
+             LEFT
+        ================================================ -->
+
+        <div class="payment-left">
+
+
+          <!-- SELECTED PLAN -->
+
+          <section class="payment-card">
+
+            <div class="payment-card-title">
+              Selected plan
+            </div>
+
+
+            <div class="selected-plan">
+
+              <div class="selected-plan-left">
+
+                <div
+                  class="selected-plan-name"
+                  id="selectedPlanName"
+                >
+                  2-Step Challenge
+                </div>
+
+                <div
+                  class="selected-plan-account"
+                  id="selectedAccount"
+                >
+                  $25,000 Account
+                </div>
+
+              </div>
+
+
+              <div class="selected-plan-badge">
+                Selected
+              </div>
+
+            </div>
+
+          </section>
+
+
+          <!-- CONFIGURATION -->
+
+          <section class="payment-card">
+
+            <div class="payment-card-title">
+              Your configuration
+            </div>
+
+
+            <div class="configuration-list">
+
+
+              <div class="configuration-row">
+
+                <span class="configuration-label">
+                  Challenge type
+                </span>
+
+                <span
+                  class="configuration-value"
+                  id="configChallenge"
+                >
+                  2-Step Challenge
+                </span>
+
+              </div>
+
+
+              <div class="configuration-row">
+
+                <span class="configuration-label">
+                  Account size
+                </span>
+
+                <span
+                  class="configuration-value"
+                  id="configAccount"
+                >
+                  $25,000
+                </span>
+
+              </div>
+
+
+              <div class="configuration-row">
+
+                <span class="configuration-label">
+                  Trading platform
+                </span>
+
+                <span
+                  class="configuration-value"
+                  id="configPlatform"
+                >
+                  MT5
+                </span>
+
+              </div>
+
+
+              <div class="configuration-row">
+
+                <span class="configuration-label">
+                  Add-ons
+                </span>
+
+                <span
+                  class="configuration-value"
+                  id="configAddons"
+                >
+                  —
+                </span>
+
+              </div>
+
+
+            </div>
+
+          </section>
+
+
+          <!-- ADDONS -->
+
+          <section class="payment-card">
+
+            <div class="payment-card-title">
+              Selected add-ons
+            </div>
+
+
+            <div
+              class="addon-summary-list"
+              id="addonSummaryList"
+            ></div>
+
+          </section>
+
+
+          <!-- SECURITY -->
+
+          <section class="payment-card">
+
+            <div class="secure-note">
+
+              <div class="secure-icon">
+                ✓
+              </div>
+
+              <div>
+                Your selected configuration is ready.
+                The final payment step can be connected here when
+                your payment system is ready.
+              </div>
+
+            </div>
+
+          </section>
+
+
+        </div>
+
+
+        <!-- ===============================================
+             RIGHT — SUMMARY
+        ================================================ -->
+
+        <aside class="payment-summary">
+
+
+          <div class="summary-top">
+
+            <div class="summary-kicker">
+              Order summary
+            </div>
+
+            <div
+              class="summary-plan-name"
+              id="summaryPlanName"
+            >
+              2-Step Challenge
+            </div>
+
+            <div
+              class="summary-account-name"
+              id="summaryAccountName"
+            >
+              Acc. size: $25,000
+            </div>
+
+          </div>
+
+
+          <!-- PRICE BREAKDOWN -->
+
+          <div class="price-breakdown">
+
+
+            <div class="price-row">
+
+              <span>
+                Challenge fee
+              </span>
+
+              <span id="challengePrice">
+                $149.00
+              </span>
+
+            </div>
+
+
+            <div
+              id="addonPriceRows"
+            ></div>
+
+
+          </div>
+
+
+          <!-- TOTAL -->
+
+          <div class="final-total">
+
+            <div class="final-total-label">
+              Total
+            </div>
+
+            <div
+              class="final-total-price"
+              id="finalTotal"
+            >
+              $149.00
+            </div>
+
+          </div>
+
+
+          <!-- ACTION -->
+
+          <div class="payment-action">
+
+            <button
+              type="button"
+              class="pay-button"
+              id="paymentButton"
+            >
+
+              Continue
+
+              <span>
+                →
+              </span>
+
+            </button>
+
+
+            <div class="payment-note">
+              You will proceed to the next step with this configuration.
+            </div>
+
+          </div>
+
+
+        </aside>
+
+      </div>
+
+    </div>
+
+  </main>
+
+
+  <!-- =====================================================
+       JAVASCRIPT
+  ===================================================== -->
+
+  <script src="js/api.js"></script>
+  <script>
+
+    /* =====================================================
+       READ CHECKOUT DATA
+    ===================================================== */
+
+    const params =
+      new URLSearchParams(
+        window.location.search
+      );
+
+
+    const track =
+      params.get("track") || "two";
+
+
+    const size =
+      Number(
+        params.get("size")
+      ) || 25000;
+
+
+    const platform =
+      params.get("platform") || "MT5";
+
+
+    const total =
+      Number(
+        params.get("total")
+      ) || 149;
+
+
+    const addonString =
+      params.get("addons") || "";
+
+    const planId =
+      params.get("planId") || "";
+
+
+    const selectedAddons =
+      addonString
+        ? addonString
+            .split(",")
+            .filter(Boolean)
+        : [];
+
+
+    /* =====================================================
+       PLAN NAMES
+    ===================================================== */
+
+    const trackNames = {
+
+      two: "2-Step Challenge",
+
+      one: "1-Step Challenge",
+
+      blitz: "Blitz Challenge",
+
+      instant: "Instant Challenge"
+
+    };
+
+
+    /* =====================================================
+       ADDON INFORMATION
+    ===================================================== */
+
+    const addonData = {
+
+      lifetime: {
+        name: "Lifetime 95% Split",
+        type: "percent",
+        value: 15
+      },
+
+      ea: {
+        name: "EA / Algo Trading",
+        type: "fixed",
+        value: 30
+      },
+
+      double: {
+        name: "Double Account",
+        type: "percent",
+        value: 40
+      },
+
+      scaling: {
+        name: "Scaling Plan",
+        type: "percent",
+        value: 10
+      },
+
+      news: {
+        name: "News Trading Unlock",
+        type: "percent",
+        value: 5
+      }
+
+    };
+
+
+    /* =====================================================
+       ELEMENTS
+    ===================================================== */
+
+    const paymentLayout =
+      document.getElementById(
+        "paymentLayout"
+      );
+
+
+    const invalidState =
+      document.getElementById(
+        "invalidState"
+      );
+
+
+    /* =====================================================
+       BASIC VALIDATION
+    ===================================================== */
+
+    const validTracks =
+      [
+        "two",
+        "one",
+        "blitz",
+        "instant"
+      ];
+
+
+    const validPlatforms =
+      [
+        "MT5",
+        "cTrader",
+        "TradeLocker",
+        "Match-Trader"
+      ];
+
+
+    if (
+      !validTracks.includes(track) ||
+      !validPlatforms.includes(platform) ||
+      !size ||
+      !total
+    ) {
+
+      paymentLayout.style.display =
+        "none";
+
+      invalidState.style.display =
+        "block";
+
+    }
+
+
+    /* =====================================================
+       DISPLAY PLAN
+    ===================================================== */
+
+    const planName =
+      trackNames[track] ||
+      "Trading Challenge";
+
+
+    document.getElementById(
+      "selectedPlanName"
+    ).textContent =
+      planName;
+
+
+    document.getElementById(
+      "summaryPlanName"
+    ).textContent =
+      planName;
+
+
+    document.getElementById(
+      "configChallenge"
+    ).textContent =
+      planName;
+
+
+    /* =====================================================
+       DISPLAY ACCOUNT
+    ===================================================== */
+
+    const formattedSize =
+      "$" +
+      size.toLocaleString();
+
+
+    document.getElementById(
+      "selectedAccount"
+    ).textContent =
+      formattedSize +
+      " Account";
+
+
+    document.getElementById(
+      "summaryAccountName"
+    ).textContent =
+      "Acc. size: " +
+      formattedSize;
+
+
+    document.getElementById(
+      "configAccount"
+    ).textContent =
+      formattedSize;
+
+
+    /* =====================================================
+       PLATFORM
+    ===================================================== */
+
+    document.getElementById(
+      "configPlatform"
+    ).textContent =
+      platform;
+
+
+    /* =====================================================
+       ADDON NAMES
+    ===================================================== */
+
+    const addonNames = [];
+
+
+    selectedAddons.forEach(
+      addonKey => {
+
+        const addon =
+          addonData[addonKey];
+
+
+        if (addon) {
+
+          addonNames.push(
+            addon.name
+          );
+
+        }
+
+      }
+    );
+
+
+    document.getElementById(
+      "configAddons"
+    ).textContent =
+      addonNames.length
+        ? addonNames.join(", ")
+        : "—";
+
+
+    /* =====================================================
+       ADDON DISPLAY
+    ===================================================== */
+
+    const addonSummaryList =
+      document.getElementById(
+        "addonSummaryList"
+      );
+
+
+    const addonPriceRows =
+      document.getElementById(
+        "addonPriceRows"
+      );
+
+
+    if (!selectedAddons.length) {
+
+      addonSummaryList.innerHTML = `
+        <div class="no-addons">
+          No add-ons selected
+        </div>
+      `;
+
+    }
+
+
+    /* =====================================================
+       CHALLENGE BASE PRICE
+    ===================================================== */
+
+    let basePrice = total;
+
+
+    let calculatedAddonTotal = 0;
+
+
+    selectedAddons.forEach(
+      addonKey => {
+
+        const addon =
+          addonData[addonKey];
+
+
+        if (!addon) {
+          return;
+        }
+
+
+        let addonPrice = 0;
+
+
+        if (
+          addon.type === "percent"
+        ) {
+
+          /*
+             The checkout page already
+             calculated the final total.
+
+             We estimate the add-on
+             component here for display.
+          */
+
+          addonPrice =
+            basePrice *
+            (addon.value / 100);
+
+        }
+
+
+        if (
+          addon.type === "fixed"
+        ) {
+
+          addonPrice =
+            addon.value;
+
+        }
+
+
+        calculatedAddonTotal +=
+          addonPrice;
+
+
+        /* LEFT ADDON LIST */
+
+        const addonItem =
+          document.createElement("div");
+
+
+        addonItem.className =
+          "addon-summary-item";
+
+
+        addonItem.innerHTML = `
+
+          <span class="addon-summary-name">
+            ${addon.name}
+          </span>
+
+          <span class="addon-summary-price">
+            ${
+              addon.type === "percent"
+                ? "+" + addon.value + "%"
+                : "+$" + addon.value
+            }
+          </span>
+
+        `;
+
+
+        addonSummaryList.appendChild(
+          addonItem
+        );
+
+
+        /* RIGHT PRICE ROW */
+
+        const priceRow =
+          document.createElement("div");
+
+
+        priceRow.className =
+          "price-row addon-row";
+
+
+        priceRow.innerHTML = `
+
+          <span>
+            ${addon.name}
+          </span>
+
+          <span>
+            ${
+              addon.type === "percent"
+                ? "+" + addon.value + "%"
+                : "+$" + addon.value.toFixed(2)
+            }
+          </span>
+
+        `;
+
+
+        addonPriceRows.appendChild(
+          priceRow
+        );
+
+      }
+    );
+
+
+    /* =====================================================
+       TOTAL
+    ===================================================== */
+
+    document.getElementById(
+      "finalTotal"
+    ).textContent =
+      "$" +
+      total.toFixed(2);
+
+
+    /*
+       Challenge price shown separately.
+
+       We keep the actual final total
+       received from checkout untouched.
+    */
+
+    const displayChallengePrice =
+      Math.max(
+        0,
+        total -
+        calculatedAddonTotal
+      );
+
+
+    document.getElementById(
+      "challengePrice"
+    ).textContent =
+      "$" +
+      displayChallengePrice.toFixed(2);
+
+
+    /* =====================================================
+       CONTINUE
+    ===================================================== */
+
+    document.getElementById(
+      "paymentButton"
+    ).addEventListener(
+      "click",
+      async function() {
+
+        const payButton = this;
+        const previousLabel = payButton.textContent;
+
+        const nextParams =
+          new URLSearchParams({
+
+            track: track,
+
+            size: size,
+
+            platform: platform,
+
+            total: total.toFixed(2),
+
+            addons:
+              selectedAddons.join(","),
+
+            planId: planId
+
+          });
+
+        const isLoggedIn =
+          sessionStorage.getItem("fundedappleLoggedIn") === "true";
+
+        if (!isLoggedIn) {
+          // Not logged in yet — send them to log in / create an account
+          // first, then bounce straight back here to finish paying.
+          nextParams.set("returnTo", "payment");
+          window.location.href = "login.html?" + nextParams.toString();
+          return;
+        }
+
+        if (!planId) {
+          alert("We couldn't match this configuration to a plan. Please go back and re-select your challenge.");
+          return;
+        }
+
+        payButton.disabled = true;
+        payButton.textContent = "Redirecting to secure payment...";
+
+        try {
+          const result = await createCheckoutSession({ planId: planId });
+          window.location.href = result.checkoutUrl;
+        } catch (error) {
+          alert(error.message || "Could not start checkout. Please try again.");
+          payButton.disabled = false;
+          payButton.textContent = previousLabel;
+        }
+
+      }
+    );
+
+  </script>
+
+</body>
+
+</html>

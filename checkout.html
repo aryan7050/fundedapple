@@ -1,0 +1,1386 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Configure your plan — Fundedapple</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <link rel="icon" type="image/png" href="assets/logo-mark.png">
+  <link rel="stylesheet" href="css/styles.css">
+
+  <style>
+    /* =====================================================
+       THEME VARIABLES
+    ===================================================== */
+    :root {
+      --bg: #070a08;
+      --surface: #0e1411;
+      --card-bg: rgba(18, 26, 22, 0.55);
+      --card-border: rgba(255, 255, 255, 0.08);
+      --text: #f0f4f1;
+      --text-soft: #9ea8a1;
+      --green: #7fcb96;
+      --green-glow: rgba(127, 203, 150, 0.22);
+      --green-dark: rgba(127, 203, 150, 0.08);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .wrap {
+      max-width: 1160px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* =====================================================
+       PAGE BACKGROUND
+    ===================================================== */
+    .checkout-page {
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(127, 203, 150, 0.07) 0%, transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(127, 203, 150, 0.04) 0%, transparent 50%),
+        var(--bg);
+    }
+
+    /* =====================================================
+       TOP NAV
+    ===================================================== */
+    .checkout-top {
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(8, 12, 10, 0.85);
+      backdrop-filter: blur(16px);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+
+    .checkout-nav {
+      min-height: 72px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+
+    .checkout-brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 17px;
+      letter-spacing: -0.01em;
+    }
+
+    .checkout-brand img {
+      width: 28px;
+      height: 28px;
+      object-fit: contain;
+      filter: drop-shadow(0 0 8px rgba(127, 203, 150, 0.3));
+    }
+
+    .checkout-back {
+      color: var(--text-soft);
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      transition: all 0.2s ease;
+    }
+
+    .checkout-back:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+      border-color: rgba(255, 255, 255, 0.08);
+    }
+
+    /* =====================================================
+       MAIN & HEADING
+    ===================================================== */
+    .checkout-main {
+      padding: 50px 0 90px;
+    }
+
+    .checkout-heading {
+      max-width: 760px;
+      margin: 0 auto 40px;
+      text-align: center;
+    }
+
+    .checkout-heading .eyebrow {
+      display: inline-block;
+      margin-bottom: 12px;
+      padding: 5px 14px;
+      border-radius: 20px;
+      background: rgba(127, 203, 150, 0.1);
+      border: 1px solid rgba(127, 203, 150, 0.25);
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .checkout-heading h1 {
+      margin: 0 0 12px;
+      font-family: 'Fraunces', serif;
+      font-size: clamp(34px, 4.5vw, 50px);
+      font-weight: 500;
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      background: linear-gradient(180deg, #ffffff 0%, #d0dad2 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .checkout-heading p {
+      max-width: 580px;
+      margin: 0 auto;
+      color: var(--text-soft);
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* =====================================================
+       LAYOUT
+    ===================================================== */
+    .checkout-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.45fr) minmax(340px, 0.75fr);
+      gap: 28px;
+      align-items: start;
+    }
+
+    .checkout-builder {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    /* =====================================================
+       CARDS
+    ===================================================== */
+    .checkout-card {
+      position: relative;
+      padding: 24px;
+      border: 1px solid var(--card-border);
+      border-radius: 16px;
+      background: var(--card-bg);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.25);
+      transition: border-color 0.2s ease, transform 0.2s ease;
+    }
+
+    .checkout-card:hover {
+      border-color: rgba(255, 255, 255, 0.12);
+      transform: translateY(-2px);
+    }
+
+    .checkout-card-title {
+      margin-bottom: 18px;
+      font-size: 13px;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkout-card-title::before {
+      content: '';
+      display: inline-block;
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 8px var(--green);
+    }
+
+    /* =====================================================
+       CHALLENGE OPTIONS
+    ===================================================== */
+    .checkout-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .checkout-option {
+      min-height: 84px;
+      padding: 14px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .checkout-option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .checkout-option.active {
+      border-color: var(--green);
+      background: linear-gradient(135deg, rgba(127, 203, 150, 0.12) 0%, rgba(127, 203, 150, 0.02) 100%);
+      box-shadow: 0 0 20px rgba(127, 203, 150, 0.15), inset 0 0 0 1px var(--green);
+    }
+
+    .checkout-option-name {
+      font-weight: 700;
+      font-size: 15px;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .checkout-option-note {
+      font-size: 11px;
+      color: var(--text-soft);
+      font-weight: 400;
+    }
+
+    .checkout-option.active .checkout-option-note {
+      color: rgba(255, 255, 255, 0.85);
+    }
+
+    /* =====================================================
+       ACCOUNT SIZE
+    ===================================================== */
+    .account-options {
+      display: grid;
+      grid-template-columns: repeat(6, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .account-option {
+      padding: 16px 10px;
+      text-align: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .account-option:hover {
+      transform: translateY(-2px);
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .account-option.active {
+      border-color: var(--green);
+      background: linear-gradient(135deg, rgba(127, 203, 150, 0.12) 0%, rgba(127, 203, 150, 0.02) 100%);
+      box-shadow: 0 0 20px rgba(127, 203, 150, 0.15), inset 0 0 0 1px var(--green);
+    }
+
+    .account-size {
+      display: block;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 15px;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 6px;
+    }
+
+    .account-fee {
+      display: block;
+      font-size: 11px;
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    .account-option.active .account-fee {
+      color: var(--green);
+    }
+
+    /* =====================================================
+       PLATFORM
+    ===================================================== */
+    .platform-options {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .platform-option {
+      min-height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .platform-option:hover {
+      border-color: rgba(255, 255, 255, 0.2);
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .platform-option.active {
+      border-color: var(--green);
+      background: linear-gradient(135deg, rgba(127, 203, 150, 0.12) 0%, rgba(127, 203, 150, 0.02) 100%);
+      box-shadow: 0 0 16px rgba(127, 203, 150, 0.12), inset 0 0 0 1px var(--green);
+      color: #fff;
+    }
+
+    /* =====================================================
+       ADD-ONS
+    ===================================================== */
+    .addon-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .addon-option {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border: 1px solid rgba(255, 255, 255, 0.07);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.015);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .addon-option:hover {
+      border-color: rgba(255, 255, 255, 0.18);
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .addon-option.active {
+      border-color: rgba(127, 203, 150, 0.5);
+      background: rgba(127, 203, 150, 0.06);
+      box-shadow: inset 0 0 0 1px rgba(127, 203, 150, 0.2);
+    }
+
+    .addon-main {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .addon-check {
+      width: 22px;
+      height: 22px;
+      flex: 0 0 22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1.5px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 800;
+      color: transparent;
+      transition: all 0.2s ease;
+    }
+
+    .addon-option.active .addon-check {
+      color: #070a08;
+      background: var(--green);
+      border-color: var(--green);
+      box-shadow: 0 0 10px rgba(127, 203, 150, 0.4);
+    }
+
+    .addon-name {
+      display: block;
+      font-size: 14px;
+      font-weight: 600;
+      color: #fff;
+      margin-bottom: 2px;
+    }
+
+    .addon-description {
+      display: block;
+      color: var(--text-soft);
+      font-size: 11px;
+      line-height: 1.4;
+    }
+
+    .addon-price {
+      flex-shrink: 0;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(127, 203, 150, 0.08);
+      padding: 4px 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(127, 203, 150, 0.18);
+    }
+
+    /* =====================================================
+       RIGHT — ORDER SUMMARY
+    ===================================================== */
+    .order-summary {
+      position: sticky;
+      top: 96px;
+      overflow: hidden;
+      border: 1px solid rgba(127, 203, 150, 0.25);
+      border-radius: 18px;
+      background: rgba(14, 20, 16, 0.75);
+      backdrop-filter: blur(16px);
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4), 0 0 30px rgba(127, 203, 150, 0.05);
+    }
+
+    .order-summary::before {
+      content: '';
+      display: block;
+      height: 3px;
+      width: 100%;
+      background: linear-gradient(90deg, var(--green) 0%, rgba(127, 203, 150, 0.3) 100%);
+    }
+
+    .summary-header {
+      padding: 24px 24px 18px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    }
+
+    .summary-title {
+      font-size: 12px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-soft);
+    }
+
+    .summary-plan {
+      margin-top: 8px;
+      font-family: 'Fraunces', serif;
+      font-size: 24px;
+      font-weight: 500;
+      color: #fff;
+    }
+
+    .summary-account {
+      margin-top: 4px;
+      color: var(--green);
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* =====================================================
+       PLAN DETAILS TOGGLE
+    ===================================================== */
+    .details-toggle {
+      width: 100%;
+      padding: 14px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border: 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(255, 255, 255, 0.015);
+      color: var(--text-soft);
+      cursor: pointer;
+      font: inherit;
+      text-align: left;
+      font-size: 12px;
+      font-weight: 600;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .details-toggle:hover {
+      background: rgba(255, 255, 255, 0.03);
+      color: #fff;
+    }
+
+    .details-arrow {
+      display: inline-block;
+      transition: transform 0.2s ease;
+      font-size: 12px;
+    }
+
+    .details-toggle.open .details-arrow {
+      transform: rotate(180deg);
+    }
+
+    .plan-details {
+      display: none;
+      padding: 12px 24px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+      background: rgba(0, 0, 0, 0.2);
+    }
+
+    .plan-details.open {
+      display: block;
+    }
+
+    .rule-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 9px 10px;
+      font-size: 12px;
+      border-radius: 6px;
+      transition: background 0.15s ease;
+    }
+
+    .rule-row:nth-child(even) {
+      background: rgba(255, 255, 255, 0.015);
+    }
+
+    .rule-row:hover {
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .rule-name {
+      color: var(--text-soft);
+      font-weight: 500;
+    }
+
+    .rule-value {
+      font-family: "IBM Plex Mono", monospace;
+      font-weight: 600;
+      color: var(--green);
+      background: rgba(127, 203, 150, 0.08);
+      padding: 2px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(127, 203, 150, 0.15);
+      font-size: 11px;
+    }
+
+    /* =====================================================
+       SUMMARY DETAILS
+    ===================================================== */
+    .summary-details {
+      padding: 18px 24px 6px;
+    }
+
+    .summary-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+      padding: 8px 0;
+      font-size: 13px;
+    }
+
+    .summary-row span:first-child {
+      color: var(--text-soft);
+    }
+
+    .summary-row span:last-child {
+      font-weight: 600;
+      color: #fff;
+    }
+
+    #summaryDiscount {
+      color: var(--green);
+    }
+
+    /* =====================================================
+       COUPON
+    ===================================================== */
+    .coupon-box {
+      padding: 12px 24px 16px;
+    }
+
+    .coupon-row {
+      display: flex;
+      gap: 8px;
+    }
+
+    .coupon-input {
+      min-width: 0;
+      flex: 1;
+      height: 42px;
+      padding: 0 12px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      border-radius: 8px;
+      outline: none;
+      background: rgba(0, 0, 0, 0.25);
+      color: #fff;
+      font: inherit;
+      font-size: 12px;
+      transition: border-color 0.2s ease;
+    }
+
+    .coupon-input:focus {
+      border-color: var(--green);
+      box-shadow: 0 0 0 2px rgba(127, 203, 150, 0.15);
+    }
+
+    .coupon-button {
+      height: 42px;
+      padding: 0 16px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #fff;
+      cursor: pointer;
+      font-size: 12px;
+      font-weight: 600;
+      transition: all 0.2s ease;
+    }
+
+    .coupon-button:hover {
+      background: rgba(255, 255, 255, 0.1);
+      border-color: rgba(255, 255, 255, 0.25);
+    }
+
+    .coupon-message {
+      min-height: 16px;
+      margin-top: 8px;
+      font-size: 11px;
+      font-weight: 500;
+    }
+
+    /* =====================================================
+       TOTAL
+    ===================================================== */
+    .summary-total {
+      margin: 8px 24px 0;
+      padding: 18px 0;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .total-label {
+      font-size: 11px;
+      color: var(--text-soft);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 700;
+    }
+
+    .total-price {
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 28px;
+      font-weight: 700;
+      color: #fff;
+      text-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+    }
+
+    /* =====================================================
+       CONTINUE BUTTON
+    ===================================================== */
+    .continue-button {
+      width: calc(100% - 48px);
+      margin: 0 24px 24px;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      border: 0;
+      border-radius: 10px;
+      background: var(--green);
+      color: #070a08;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+      box-shadow: 0 8px 20px rgba(127, 203, 150, 0.2);
+    }
+
+    .continue-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 28px rgba(127, 203, 150, 0.35);
+      background: #8de3a6;
+    }
+
+    .continue-button:active {
+      transform: translateY(0);
+    }
+
+    /* =====================================================
+       RESPONSIVE
+    ===================================================== */
+    @media (max-width: 950px) {
+      .checkout-layout {
+        grid-template-columns: 1fr;
+      }
+
+      .order-summary {
+        position: relative;
+        top: auto;
+      }
+    }
+
+    @media (max-width: 700px) {
+      .checkout-main {
+        padding-top: 35px;
+      }
+
+      .checkout-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .account-options {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .platform-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (max-width: 480px) {
+      .checkout-card {
+        padding: 18px;
+      }
+
+      .account-options {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .checkout-nav {
+        min-height: 62px;
+      }
+
+      .checkout-back {
+        font-size: 12px;
+      }
+    }
+  </style>
+  <link rel="stylesheet" href="css/flow-polish.css">
+</head>
+
+<body class="checkout-page">
+
+  <!-- HEADER -->
+  <header class="checkout-top">
+    <div class="wrap checkout-nav">
+      <a class="checkout-brand" href="index.html">
+        <img src="assets/logo-mark.png" alt="Fundedapple logo">
+        Fundedapple
+      </a>
+
+      <a class="checkout-back" href="index.html#configurator">
+        ← Back to configurator
+      </a>
+    </div>
+  </header>
+
+  <!-- MAIN -->
+  <main class="checkout-main">
+    <div class="wrap">
+
+      <!-- HEADING -->
+      <div class="checkout-heading">
+        <div class="eyebrow">
+          Your trading plan
+        </div>
+
+        <h1>
+          Configure your plan
+        </h1>
+
+        <p>
+          Review your challenge, account size, platform and optional add-ons before continuing.
+        </p>
+      </div>
+
+      <!-- LAYOUT -->
+      <div class="checkout-layout">
+
+        <!-- LEFT BUILDER -->
+        <div class="checkout-builder">
+
+          <!-- CHALLENGE TYPE -->
+          <section class="checkout-card">
+            <div class="checkout-card-title">
+              Challenge Type
+            </div>
+
+            <div class="checkout-options">
+              <div class="checkout-option active" data-track="two">
+                <div class="checkout-option-name">2-Step</div>
+                <div class="checkout-option-note">Balanced</div>
+              </div>
+
+              <div class="checkout-option" data-track="one">
+                <div class="checkout-option-name">1-Step</div>
+                <div class="checkout-option-note">Straightforward</div>
+              </div>
+
+              <div class="checkout-option" data-track="blitz">
+                <div class="checkout-option-name">Blitz</div>
+                <div class="checkout-option-note">3-day sprint</div>
+              </div>
+
+              <div class="checkout-option" data-track="instant">
+                <div class="checkout-option-name">Instant</div>
+                <div class="checkout-option-note">Skip the challenge</div>
+              </div>
+            </div>
+          </section>
+
+          <!-- ACCOUNT SIZE -->
+          <section class="checkout-card">
+            <div class="checkout-card-title">
+              Account Balance
+            </div>
+
+            <div class="account-options">
+              <div class="account-option" data-size="5000">
+                <span class="account-size">$5K</span>
+                <span class="account-fee">Fee: $39</span>
+              </div>
+
+              <div class="account-option" data-size="10000">
+                <span class="account-size">$10K</span>
+                <span class="account-fee">Fee: $69</span>
+              </div>
+
+              <div class="account-option active" data-size="25000">
+                <span class="account-size">$25K</span>
+                <span class="account-fee">Fee: $149</span>
+              </div>
+
+              <div class="account-option" data-size="50000">
+                <span class="account-size">$50K</span>
+                <span class="account-fee">Fee: $249</span>
+              </div>
+
+              <div class="account-option" data-size="100000">
+                <span class="account-size">$100K</span>
+                <span class="account-fee">Fee: $449</span>
+              </div>
+
+              <div class="account-option" data-size="200000">
+                <span class="account-size">$200K</span>
+                <span class="account-fee">Fee: $849</span>
+              </div>
+            </div>
+          </section>
+
+          <!-- TRADING PLATFORM -->
+          <section class="checkout-card">
+            <div class="checkout-card-title">
+              Trading Platform
+            </div>
+
+            <div class="platform-options">
+              <div class="platform-option active" data-platform="MT5">MT5</div>
+              <div class="platform-option" data-platform="cTrader">cTrader</div>
+              <div class="platform-option" data-platform="TradeLocker">TradeLocker</div>
+              <div class="platform-option" data-platform="Match-Trader">Match-Trader</div>
+            </div>
+          </section>
+
+          <!-- ADD-ONS -->
+          <section class="checkout-card">
+            <div class="checkout-card-title">
+              Choose your add-ons
+            </div>
+
+            <div class="addon-list">
+              <div class="addon-option" data-addon="lifetime" data-type="percent" data-value="15">
+                <div class="addon-main">
+                  <div class="addon-check">✓</div>
+                  <div>
+                    <span class="addon-name">Lifetime 95% Split</span>
+                    <span class="addon-description">Keep the maximum profit split permanently.</span>
+                  </div>
+                </div>
+                <div class="addon-price">+15%</div>
+              </div>
+
+              <div class="addon-option" data-addon="ea" data-type="fixed" data-value="30">
+                <div class="addon-main">
+                  <div class="addon-check">✓</div>
+                  <div>
+                    <span class="addon-name">EA / Algo Trading</span>
+                    <span class="addon-description">Enable Expert Advisors and automated strategies.</span>
+                  </div>
+                </div>
+                <div class="addon-price">+$30</div>
+              </div>
+
+              <div class="addon-option" data-addon="double" data-type="percent" data-value="40">
+                <div class="addon-main">
+                  <div class="addon-check">✓</div>
+                  <div>
+                    <span class="addon-name">Double Account</span>
+                    <span class="addon-description">Add the option to double your account size.</span>
+                  </div>
+                </div>
+                <div class="addon-price">+40%</div>
+              </div>
+
+              <div class="addon-option" data-addon="scaling" data-type="percent" data-value="10">
+                <div class="addon-main">
+                  <div class="addon-check">✓</div>
+                  <div>
+                    <span class="addon-name">Scaling Plan</span>
+                    <span class="addon-description">Qualify for larger account sizes over time.</span>
+                  </div>
+                </div>
+                <div class="addon-price">+10%</div>
+              </div>
+
+              <div class="addon-option" data-addon="news" data-type="percent" data-value="5">
+                <div class="addon-main">
+                  <div class="addon-check">✓</div>
+                  <div>
+                    <span class="addon-name">News Trading Unlock</span>
+                    <span class="addon-description">Trade through high-impact news without restriction.</span>
+                  </div>
+                </div>
+                <div class="addon-price">+5%</div>
+              </div>
+            </div>
+          </section>
+
+        </div>
+
+        <!-- RIGHT — ORDER SUMMARY -->
+        <aside class="order-summary">
+
+          <div class="summary-header">
+            <div class="summary-title">Order Summary</div>
+            <div class="summary-plan" id="summaryPlan">2-Step Challenge</div>
+            <div class="summary-account" id="summaryAccount">Acc. size: $25,000</div>
+          </div>
+
+          <button type="button" class="details-toggle" id="detailsToggle">
+            <span>View Plan Details</span>
+            <span class="details-arrow">↓</span>
+          </button>
+
+          <div class="plan-details" id="planDetails">
+            <div class="rule-row">
+              <span class="rule-name">Profit target</span>
+              <span class="rule-value" id="ruleTarget">8% / 5%</span>
+            </div>
+
+            <div class="rule-row">
+              <span class="rule-name">Max daily loss</span>
+              <span class="rule-value" id="ruleDaily">5%</span>
+            </div>
+
+            <div class="rule-row">
+              <span class="rule-name">Max drawdown</span>
+              <span class="rule-value" id="ruleDD">10%</span>
+            </div>
+
+            <div class="rule-row">
+              <span class="rule-name">Minimum trading days</span>
+              <span class="rule-value" id="ruleDays">4 min</span>
+            </div>
+
+            <div class="rule-row">
+              <span class="rule-name">News trading</span>
+              <span class="rule-value" id="ruleNews">Allowed</span>
+            </div>
+
+            <div class="rule-row">
+              <span class="rule-name">Profit split</span>
+              <span class="rule-value" id="ruleSplit">Up to 90%</span>
+            </div>
+          </div>
+
+          <div class="summary-details">
+            <div class="summary-row">
+              <span>Trading Platform</span>
+              <span id="summaryPlatform">MT5</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Add-ons</span>
+              <span id="summaryAddons">—</span>
+            </div>
+
+            <div class="summary-row">
+              <span>Discount</span>
+              <span id="summaryDiscount">—</span>
+            </div>
+          </div>
+
+          <div class="coupon-box">
+            <div class="coupon-row">
+              <input type="text" class="coupon-input" id="couponInput" placeholder="Coupon code" autocomplete="off">
+              <button type="button" class="coupon-button" id="couponButton">Apply</button>
+            </div>
+            <div class="coupon-message" id="couponMessage"></div>
+          </div>
+
+          <div class="summary-total">
+            <div class="total-label">Total</div>
+            <div class="total-price" id="totalPrice">$149.00</div>
+          </div>
+
+          <button type="button" class="continue-button" id="continueButton">
+            Continue
+            <span>→</span>
+          </button>
+
+        </aside>
+
+      </div>
+    </div>
+  </main>
+
+  <!-- JAVASCRIPT -->
+  <script src="js/api.js"></script>
+  <script>
+    const priceMap = {
+      5000: 39,
+      10000: 69,
+      25000: 149,
+      50000: 249,
+      100000: 449,
+      200000: 849
+    };
+
+    const trackMultiplier = {
+      two: 1,
+      one: 0.90,
+      blitz: 1.15,
+      instant: 1.80
+    };
+
+    const trackNames = {
+      two: "2-Step Challenge",
+      one: "1-Step Challenge",
+      blitz: "Blitz Challenge",
+      instant: "Instant Challenge"
+    };
+
+    const trackRules = {
+      two: {
+        target: "8% / 5%",
+        daily: "5%",
+        dd: "10%",
+        days: "4 min",
+        news: "Allowed",
+        split: "Up to 90%"
+      },
+      one: {
+        target: "10%",
+        daily: "4%",
+        dd: "6%",
+        days: "4 min",
+        news: "Restricted",
+        split: "80% start"
+      },
+      blitz: {
+        target: "6% in 3 days",
+        daily: "4%",
+        dd: "8%",
+        days: "2 min",
+        news: "Allowed",
+        split: "Up to 85%"
+      },
+      instant: {
+        target: "No challenge",
+        daily: "3%",
+        dd: "5%",
+        days: "—",
+        news: "Restricted",
+        split: "75% start"
+      }
+    };
+
+    let currentTrack = "two";
+    let currentSize = 25000;
+    let currentPlatform = "MT5";
+    let currentBasePrice = 149;
+    let couponDiscount = 0;
+
+    // Local priceMap/trackMultiplier above are used as an instant fallback
+    // so the page renders immediately. plansLookup (fetched from the
+    // backend) is the authoritative source once it loads — the database
+    // price always wins over the local calculation.
+    let plansLookup = {};
+
+    async function loadPlansFromBackend() {
+      try {
+        const result = await fetchPlans();
+        (result.plans || []).forEach(plan => {
+          plansLookup[`${plan.trackKey}_${plan.initialBalance}`] = plan;
+        });
+        updateSummary();
+      } catch (error) {
+        console.error('Could not load live pricing, using local fallback:', error);
+      }
+    }
+
+    function getPlanFor(track, size) {
+      return plansLookup[`${track}_${size}`] || null;
+    }
+
+    function rulesFromPlan(plan) {
+      let target;
+      if (plan.profitTarget === 0) {
+        target = "No challenge";
+      } else if (plan.profitTargetPhase2) {
+        target = `${plan.profitTarget}% / ${plan.profitTargetPhase2}%`;
+      } else if (plan.targetNote) {
+        target = `${plan.profitTarget}% ${plan.targetNote}`;
+      } else {
+        target = `${plan.profitTarget}%`;
+      }
+
+      return {
+        target: target,
+        daily: `${plan.dailyLossLimit}%`,
+        dd: `${plan.maxDrawdown}%`,
+        days: plan.minTradingDays === 0 ? "—" : `${plan.minTradingDays} min`,
+        news: plan.newsTradingAllowed ? "Allowed" : "Restricted",
+        split: plan.profitSplitLabel
+      };
+    }
+
+    const params = new URLSearchParams(window.location.search);
+
+    if (params.get("track")) {
+      const requestedTrack = params.get("track");
+      if (trackNames[requestedTrack]) {
+        currentTrack = requestedTrack;
+      }
+    }
+
+    if (params.get("size")) {
+      const requestedSize = Number(params.get("size"));
+      if (priceMap[requestedSize]) {
+        currentSize = requestedSize;
+      }
+    }
+
+    if (params.get("platform")) {
+      currentPlatform = params.get("platform");
+    }
+
+    const challengeOptions = document.querySelectorAll(".checkout-option");
+    const accountOptions = document.querySelectorAll(".account-option");
+    const platformOptions = document.querySelectorAll(".platform-option");
+    const addonOptions = document.querySelectorAll(".addon-option");
+
+    function getBasePrice() {
+      const plan = getPlanFor(currentTrack, currentSize);
+      if (plan) {
+        return plan.price;
+      }
+      const rawPrice = priceMap[currentSize] || 149;
+      const multiplier = trackMultiplier[currentTrack] || 1;
+      return Math.round(rawPrice * multiplier);
+    }
+
+    function getAddonTotal(basePrice) {
+      let total = 0;
+      addonOptions.forEach(addon => {
+        if (!addon.classList.contains("active")) return;
+        const type = addon.dataset.type;
+        const value = Number(addon.dataset.value);
+        if (type === "percent") {
+          total += basePrice * (value / 100);
+        }
+        if (type === "fixed") {
+          total += value;
+        }
+      });
+      return total;
+    }
+
+    function getAddonNames() {
+      const names = [];
+      addonOptions.forEach(addon => {
+        if (addon.classList.contains("active")) {
+          const name = addon.querySelector(".addon-name");
+          if (name) {
+            names.push(name.textContent.trim());
+          }
+        }
+      });
+      return names;
+    }
+
+    function updateSummary() {
+      currentBasePrice = getBasePrice();
+      const addonTotal = getAddonTotal(currentBasePrice);
+      const subtotal = currentBasePrice + addonTotal;
+      const discountAmount = subtotal * (couponDiscount / 100);
+      const total = Math.max(0, subtotal - discountAmount);
+
+      document.getElementById("summaryPlan").textContent = trackNames[currentTrack];
+      document.getElementById("summaryAccount").textContent = "Acc. size: $" + currentSize.toLocaleString();
+      document.getElementById("summaryPlatform").textContent = currentPlatform;
+
+      const addonNames = getAddonNames();
+      document.getElementById("summaryAddons").textContent =
+        addonNames.length ? addonNames.join(", ") : "—";
+
+      document.getElementById("summaryDiscount").textContent =
+        couponDiscount ? couponDiscount + "% OFF" : "—";
+
+      document.getElementById("totalPrice").textContent = "$" + total.toFixed(2);
+
+      const matchedPlan = getPlanFor(currentTrack, currentSize);
+      const rules = matchedPlan ? rulesFromPlan(matchedPlan) : trackRules[currentTrack];
+      document.getElementById("ruleTarget").textContent = rules.target;
+      document.getElementById("ruleDaily").textContent = rules.daily;
+      document.getElementById("ruleDD").textContent = rules.dd;
+      document.getElementById("ruleDays").textContent = rules.days;
+      document.getElementById("ruleNews").textContent = rules.news;
+      document.getElementById("ruleSplit").textContent = rules.split;
+
+      accountOptions.forEach(option => {
+        const size = Number(option.dataset.size);
+        const plan = getPlanFor(currentTrack, size);
+        const fee = plan ? plan.price : Math.round(priceMap[size] * (trackMultiplier[currentTrack] || 1));
+        const feeElement = option.querySelector(".account-fee");
+        if (feeElement) {
+          feeElement.textContent = "Fee: $" + fee;
+        }
+      });
+    }
+
+    challengeOptions.forEach(option => {
+      option.addEventListener("click", function() {
+        challengeOptions.forEach(item => item.classList.remove("active"));
+        this.classList.add("active");
+        currentTrack = this.dataset.track;
+        updateSummary();
+      });
+    });
+
+    accountOptions.forEach(option => {
+      option.addEventListener("click", function() {
+        accountOptions.forEach(item => item.classList.remove("active"));
+        this.classList.add("active");
+        currentSize = Number(this.dataset.size);
+        updateSummary();
+      });
+    });
+
+    platformOptions.forEach(option => {
+      option.addEventListener("click", function() {
+        platformOptions.forEach(item => item.classList.remove("active"));
+        this.classList.add("active");
+        currentPlatform = this.dataset.platform;
+        updateSummary();
+      });
+    });
+
+    addonOptions.forEach(addon => {
+      addon.addEventListener("click", function() {
+        this.classList.toggle("active");
+        updateSummary();
+      });
+    });
+
+    const detailsToggle = document.getElementById("detailsToggle");
+    const planDetails = document.getElementById("planDetails");
+
+    detailsToggle.addEventListener("click", function() {
+      const isOpen = planDetails.classList.toggle("open");
+      this.classList.toggle("open", isOpen);
+    });
+
+    document.getElementById("couponButton").addEventListener("click", function() {
+      const input = document.getElementById("couponInput");
+      const message = document.getElementById("couponMessage");
+      const code = input.value.trim().toUpperCase();
+
+      if (code === "APPLE10") {
+        couponDiscount = 10;
+        message.textContent = "✓ Coupon applied — 10% OFF";
+        message.style.color = "var(--green, #7fcb96)";
+        updateSummary();
+        return;
+      }
+
+      if (!code) {
+        couponDiscount = 0;
+        message.textContent = "";
+        updateSummary();
+        return;
+      }
+
+      couponDiscount = 0;
+      message.textContent = "Invalid coupon code.";
+      message.style.color = "#d88989";
+      updateSummary();
+    });
+
+    document.getElementById("continueButton").addEventListener("click", function() {
+
+  const total = document.getElementById("totalPrice").textContent.replace("$", "");
+
+  const selectedAddons = [];
+
+  addonOptions.forEach(addon => {
+    if (addon.classList.contains("active")) {
+      selectedAddons.push(addon.dataset.addon);
+    }
+  });
+
+  const matchedPlan = getPlanFor(currentTrack, currentSize);
+
+  const checkoutParams = new URLSearchParams({
+    track: currentTrack,
+    size: currentSize,
+    platform: currentPlatform,
+    total: total,
+    addons: selectedAddons.join(","),
+    planId: matchedPlan ? matchedPlan.id : ""
+  });
+
+  window.location.href = "payment.html?" + checkoutParams.toString();
+
+});
+
+    challengeOptions.forEach(option => {
+      option.classList.toggle("active", option.dataset.track === currentTrack);
+    });
+
+    accountOptions.forEach(option => {
+      option.classList.toggle("active", Number(option.dataset.size) === currentSize);
+    });
+
+    platformOptions.forEach(option => {
+      option.classList.toggle("active", option.dataset.platform === currentPlatform);
+    });
+
+    updateSummary();
+    loadPlansFromBackend();
+  </script>
+
+</body>
+</html>

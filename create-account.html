@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Create Account — Fundedapple</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
+<link rel="apple-touch-icon" sizes="180x180" href="favicon-180.png">
+
+<style>
+  :root {
+    --bg: #070a08;
+    --surface: #0e1411;
+    --card-bg: rgba(18, 26, 22, 0.55);
+    --card-border: rgba(255, 255, 255, 0.08);
+    --text: #f0f4f1;
+    --text-soft: #9ea8a1;
+    --text-faint: #5B6960;
+    --green: #7fcb96;
+    --green-bright: #8de3a6;
+    --green-dark: rgba(127, 203, 150, 0.08);
+    --red: #d98282;
+    --gold: #d9a94f;
+    --line: rgba(255, 255, 255, 0.07);
+    --line-2: rgba(255, 255, 255, 0.05);
+    --radius: 10px;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    line-height: 1.55;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .wrap {
+    max-width: 1180px;
+    margin: 0 auto;
+    padding: 0 32px;
+  }
+
+  header {
+    border-bottom: 1px solid var(--line);
+    background: rgba(8, 12, 10, 0.85);
+    backdrop-filter: blur(16px);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+  }
+
+  .login-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 72px;
+  }
+
+  .login-brand {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: 17px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+  }
+
+  .login-brand img {
+    width: 24px;
+    height: 24px;
+    object-fit: contain;
+    filter: drop-shadow(0 0 8px rgba(127, 203, 150, 0.3));
+  }
+
+  .login-back {
+    font-size: 13px;
+    color: var(--text-soft);
+    transition: color 0.2s, background 0.2s;
+    padding: 6px 12px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+  }
+
+  .login-back:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.04);
+    border-color: rgba(255, 255, 255, 0.08);
+  }
+
+  .login-page {
+    background:
+      radial-gradient(circle at 50% 0%, rgba(127, 203, 150, 0.07) 0%, transparent 60%),
+      radial-gradient(circle at 100% 100%, rgba(127, 203, 150, 0.04) 0%, transparent 50%),
+      var(--bg);
+  }
+
+  main {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 24px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  main::before {
+    content: "";
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 700px;
+    height: 400px;
+    background: radial-gradient(
+      ellipse at center,
+      rgba(127, 203, 150, 0.10),
+      transparent 70%
+    );
+    pointer-events: none;
+  }
+
+  .login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 440px;
+    background: var(--card-bg);
+    border: 1px solid var(--card-border);
+    border-radius: 18px;
+    padding: 40px 32px;
+    backdrop-filter: blur(18px);
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.35);
+    transition: transform 0.25s ease, border-color 0.25s ease;
+  }
+
+  .login-card:hover {
+    transform: translateY(-3px);
+    border-color: rgba(127, 203, 150, 0.2);
+  }
+
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--green);
+    display: inline-block;
+    margin-bottom: 16px;
+    padding: 5px 14px;
+    border-radius: 20px;
+    background: rgba(127, 203, 150, 0.1);
+    border: 1px solid rgba(127, 203, 150, 0.25);
+  }
+
+  .login-card h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 500;
+    font-size: clamp(28px, 4vw, 34px);
+    margin-bottom: 10px;
+    letter-spacing: -0.02em;
+    background: linear-gradient(180deg, #ffffff 0%, #d0dad2 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .login-sub {
+    color: var(--text-soft);
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 28px;
+  }
+
+  .signup-form {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+  }
+
+  .signup-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+  }
+
+  .signup-field label {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-soft);
+    letter-spacing: 0.02em;
+  }
+
+  .signup-field input {
+    width: 100%;
+    height: 48px;
+    padding: 0 16px;
+    background: rgba(0, 0, 0, 0.25);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: var(--radius);
+    color: #fff;
+    font-size: 14px;
+    font-family: 'Inter', sans-serif;
+    outline: none;
+    transition: border-color 0.2s, box-shadow 0.2s;
+  }
+
+  .signup-field input::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  .signup-field input:focus {
+    border-color: var(--green);
+    box-shadow: 0 0 0 2px rgba(127, 203, 150, 0.15);
+  }
+
+  .signup-field input:invalid:not(:placeholder-shown) {
+    border-color: var(--red);
+  }
+
+  .field-hint {
+    font-size: 11.5px;
+    color: var(--text-faint);
+    margin-top: 2px;
+  }
+
+  .signup-password-wrap {
+    position: relative;
+  }
+
+  .signup-password-wrap input {
+    padding-right: 44px;
+  }
+
+  .signup-password-toggle {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: transparent;
+    color: var(--text-faint);
+    cursor: pointer;
+    padding: 0;
+    font-size: 15px;
+    border-radius: 4px;
+    transition: color 0.2s;
+  }
+
+  .signup-password-toggle:hover {
+    color: var(--green-bright);
+  }
+
+  .signup-password-toggle:focus-visible {
+    outline: 2px solid var(--green);
+    outline-offset: 1px;
+  }
+
+  .pw-strength {
+    display: flex;
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .pw-strength span {
+    height: 3px;
+    flex: 1;
+    border-radius: 2px;
+    background: var(--line-2);
+    transition: background 0.2s;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: var(--radius);
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+    border: 1px solid transparent;
+  }
+
+  .btn-primary {
+    background: var(--green);
+    color: #070a08;
+    box-shadow: 0 8px 20px rgba(127, 203, 150, 0.2);
+  }
+
+  .btn-primary:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 12px 28px rgba(127, 203, 150, 0.35);
+    background: var(--green-bright);
+  }
+
+  .btn-primary:active {
+    transform: translateY(0);
+  }
+
+  .signup-submit {
+    width: 100%;
+    height: 50px;
+    margin-top: 4px;
+  }
+
+  .signup-terms {
+    font-size: 12.5px;
+    color: var(--text-soft);
+    line-height: 1.5;
+  }
+
+  .signup-terms label {
+    display: flex;
+    gap: 10px;
+    align-items: flex-start;
+    cursor: pointer;
+  }
+
+  .signup-terms input {
+    margin-top: 3px;
+    accent-color: var(--green);
+  }
+
+  .signup-terms a {
+    color: var(--green-bright);
+    text-decoration: underline;
+  }
+
+  .signup-message {
+    display: none;
+    margin-top: 20px;
+    padding: 14px 16px;
+    border-radius: 10px;
+    font-size: 13.5px;
+    line-height: 1.5;
+    background: var(--green-dark);
+    border: 1px solid rgba(127, 203, 150, 0.2);
+    color: var(--green);
+  }
+
+  .signup-message.show {
+    display: block;
+  }
+
+  .signup-message.error {
+    background: rgba(217, 130, 130, 0.08);
+    color: var(--red);
+    border-color: rgba(217, 130, 130, 0.2);
+  }
+
+  .signup-message.success {
+    background: rgba(127, 203, 150, 0.08);
+    color: var(--green);
+    border-color: rgba(127, 203, 150, 0.2);
+  }
+
+  .signup-login {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--text-soft);
+  }
+
+  .signup-login a {
+    color: var(--green-bright);
+    font-weight: 600;
+  }
+
+  .signup-login a:hover {
+    text-decoration: underline;
+  }
+
+  .trust-row {
+    display: flex;
+    gap: 14px;
+    justify-content: center;
+    margin-top: 28px;
+    flex-wrap: wrap;
+  }
+
+  .trust-chip {
+    font-size: 11px;
+    font-family: 'IBM Plex Mono', monospace;
+    color: var(--text-faint);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .trust-chip .dot {
+    width: 5px;
+    height: 5px;
+    border-radius: 50%;
+    background: var(--green-bright);
+  }
+
+  @media (max-width: 480px) {
+    .login-card {
+      padding: 32px 24px;
+    }
+
+    main {
+      padding: 40px 20px;
+    }
+
+    .login-nav {
+      height: 68px;
+    }
+  }
+
+
+  /* =====================================================
+     PREMIUM AUTH POLISH
+  ===================================================== */
+  .login-page::after{content:"";position:fixed;inset:0;pointer-events:none;background:linear-gradient(rgba(255,255,255,.016) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.016) 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(to bottom,black,transparent 82%);}
+  main{isolation:isolate;}
+  .login-card{box-shadow:0 30px 90px rgba(0,0,0,.46),0 0 0 1px rgba(127,203,150,.025);overflow:hidden;}
+  .login-card::after{content:"";position:absolute;left:8%;right:8%;top:-120px;height:220px;background:radial-gradient(ellipse,rgba(127,203,150,.13),transparent 68%);pointer-events:none;}
+  .login-card>*{position:relative;z-index:2;}
+  #googleBtnContainer{min-height:44px;display:flex;align-items:center;justify-content:center;}
+  .google-unavailable{font-size:11px;color:var(--text-faint);}
+</style>
+<link rel="stylesheet" href="css/flow-polish.css">
+</head>
+
+<body class="login-page">
+
+<svg width="0" height="0" style="position:absolute;">
+  <symbol id="appleMark" viewBox="0 0 100 100">
+    <path class="half-l"
+      d="M50 30 C48 30 38 16 25 21 C11 26 6 44 11 60 C16 76 32 92 50 92 Z"/>
+    <path class="half-r"
+      d="M50 30 C52 30 62 16 75 21 C89 26 94 44 89 60 C84 76 68 92 50 92 Z"/>
+    <path class="stem"
+      d="M50 30 C48 20 44 13 39 9"
+      stroke-width="4"
+      fill="none"
+      stroke-linecap="round"/>
+    <path class="leaf"
+      d="M50 16 C56 9 65 9 69 15 C64 20 56 20 50 16 Z"/>
+  </symbol>
+</svg>
+
+<header>
+  <div class="wrap login-nav">
+    <a class="login-brand" href="index.html">
+      <svg class="apple-mark" width="24" height="24">
+        <use href="#appleMark"/>
+      </svg>
+      Fundedapple
+    </a>
+
+    <a class="login-back" href="index.html">
+      ← Back to website
+    </a>
+  </div>
+</header>
+
+<main>
+  <section class="login-card" aria-labelledby="signup-title">
+
+    <div class="eyebrow">Trader portal</div>
+
+    <h1 id="signup-title">Create your account.</h1>
+
+    <p class="login-sub">
+      Set up your Fundedapple login — you'll use it to track challenges and request payouts once your account is funded.
+    </p>
+
+    <div id="googleBtnContainer" style="display:flex;justify-content:center;margin-bottom:16px;"></div>
+    <div class="login-divider" style="display:flex;align-items:center;gap:12px;margin:18px 0;color:var(--text-faint,#6b7280);font-size:12px;">
+      <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
+      <span>or continue with email</span>
+      <span style="flex:1;height:1px;background:rgba(255,255,255,.12);"></span>
+    </div>
+
+    <form class="signup-form" id="signupForm" novalidate>
+
+      <div class="signup-field">
+        <label for="name">Full name</label>
+
+        <input
+          id="name"
+          name="name"
+          type="text"
+          autocomplete="name"
+          placeholder="Your full name"
+          required
+        >
+      </div>
+
+      <div class="signup-field">
+        <label for="email">Email</label>
+
+        <input
+          id="email"
+          name="email"
+          type="email"
+          autocomplete="email"
+          placeholder="you@example.com"
+          required
+        >
+      </div>
+
+      <div class="signup-field">
+
+        <label for="password">Password</label>
+
+        <div class="signup-password-wrap">
+
+          <input
+            id="password"
+            name="password"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Create a password"
+            minlength="8"
+            required
+          >
+
+          <button
+            class="signup-password-toggle"
+            id="passwordToggle"
+            type="button"
+            aria-label="Show password"
+            aria-pressed="false"
+            title="Show password"
+          >◉</button>
+
+        </div>
+
+        <div class="pw-strength" id="pwStrength">
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
+        <div class="field-hint">
+          At least 8 characters. Mix in a number or symbol for a stronger password.
+        </div>
+
+      </div>
+
+      <div class="signup-field">
+
+        <label for="confirmPassword">Confirm password</label>
+
+        <div class="signup-password-wrap">
+
+          <input
+            id="confirmPassword"
+            name="confirmPassword"
+            type="password"
+            autocomplete="new-password"
+            placeholder="Confirm your password"
+            minlength="8"
+            required
+          >
+
+          <button
+            class="signup-password-toggle"
+            id="confirmPasswordToggle"
+            type="button"
+            aria-label="Show password"
+            aria-pressed="false"
+            title="Show password"
+          >◉</button>
+
+        </div>
+
+      </div>
+
+      <div class="signup-terms">
+
+        <label>
+
+          <input
+            id="terms"
+            name="terms"
+            type="checkbox"
+            required
+          >
+
+          <span>
+            I agree to the
+            <a href="terms.html">Terms of Service</a>
+            and
+            <a href="risk-disclosure.html">Risk Disclosure</a>.
+          </span>
+
+        </label>
+
+      </div>
+
+      <button
+        class="btn btn-primary signup-submit"
+        type="submit"
+        id="signupSubmit"
+      >
+        Create account
+      </button>
+
+    </form>
+
+    <form class="signup-form" id="otpForm" novalidate style="display:none;">
+
+      <div class="signup-field">
+        <label for="otpCode">Verification code</label>
+        <p class="login-sub" style="margin-bottom:8px;">
+          We sent a 6-digit code to <strong id="otpEmailDisplay"></strong>. Enter it below to finish creating your account.
+        </p>
+        <input
+          id="otpCode"
+          name="otpCode"
+          type="text"
+          inputmode="numeric"
+          maxlength="6"
+          autocomplete="one-time-code"
+          placeholder="6-digit code"
+        />
+      </div>
+
+      <button
+        class="btn btn-primary signup-submit"
+        type="submit"
+        id="otpSubmit"
+      >
+        Verify and continue
+      </button>
+
+      <button
+        type="button"
+        id="otpResend"
+        class="btn btn-secondary"
+        style="margin-top:10px;"
+      >
+        Resend code
+      </button>
+
+    </form>
+
+    <div
+      class="signup-message"
+      id="signupMessage"
+      role="status"
+    ></div>
+
+    <p class="signup-login" id="signupLoginLink">
+      Already have an account?
+      <a href="login.html">Log in</a>
+    </p>
+
+    <div class="trust-row">
+
+      <div class="trust-chip">
+        <span class="dot"></span>
+        12-hour payout guarantee
+      </div>
+
+      <div class="trust-chip">
+        <span class="dot"></span>
+        Rules published upfront
+      </div>
+
+    </div>
+
+  </section>
+</main>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<script src="js/api.js"></script>
+  <script>
+  /* =====================================================
+     GOOGLE SIGN-IN
+  ===================================================== */
+
+  async function handleGoogleCredential(response) {
+    try {
+      const data = await googleSignIn(response.credential);
+      sessionStorage.setItem('fundedappleLoggedIn', 'true');
+      sessionStorage.setItem('fundedapple_access_token', data.accessToken);
+      sessionStorage.setItem('fundedapple_refresh_token', data.refreshToken || '');
+      sessionStorage.setItem('fundedapple_user_name', `${data.user.firstName} ${data.user.lastName}`.trim() || data.user.email);
+      sessionStorage.setItem('fundedapple_user', JSON.stringify(data.user));
+      window.location.href = 'dashboard.html';
+    } catch (error) {
+      alert(error.message || 'Google sign-in failed.');
+    }
+  }
+
+  async function waitForGoogleIdentity(timeout = 10000) {
+    const started = Date.now();
+    while (!(window.google && window.google.accounts && window.google.accounts.id)) {
+      if (Date.now() - started >= timeout) {
+        throw new Error('Google Sign-In could not be loaded. Please check your internet connection or try again.');
+      }
+      await new Promise(resolve => setTimeout(resolve, 100));
+    }
+    return window.google;
+  }
+
+  async function initGoogleSignIn() {
+    const container = document.getElementById('googleBtnContainer');
+    if (!container) return;
+
+    try {
+      const { clientId } = await fetchGoogleClientId();
+      if (!clientId) return;
+
+      await waitForGoogleIdentity();
+
+      google.accounts.id.initialize({
+        client_id: clientId,
+        callback: handleGoogleCredential,
+      });
+
+      container.innerHTML = '';
+      google.accounts.id.renderButton(
+        container,
+        { theme: 'filled_black', size: 'large', width: 360, text: 'signup_with', shape: 'rectangular', logo_alignment: 'left' }
+      );
+      container.dataset.ready = 'true';
+    } catch (error) {
+      console.error('Google Sign-In not available:', error);
+      container.innerHTML = '<span class="google-unavailable">Google Sign-In is temporarily unavailable.</span>';
+    }
+  }
+
+  initGoogleSignIn();
+
+  /* =====================================================
+     PASSWORD SHOW / HIDE
+  ===================================================== */
+
+  function setupPasswordToggle(inputId, buttonId) {
+    const input = document.getElementById(inputId);
+    const button = document.getElementById(buttonId);
+
+    button.addEventListener('click', function () {
+      const isHidden = input.type === 'password';
+      input.type = isHidden ? 'text' : 'password';
+      this.setAttribute('aria-label', isHidden ? 'Hide password' : 'Show password');
+      this.setAttribute('aria-pressed', String(isHidden));
+      this.setAttribute('title', isHidden ? 'Hide password' : 'Show password');
+    });
+  }
+
+  setupPasswordToggle('password', 'passwordToggle');
+  setupPasswordToggle('confirmPassword', 'confirmPasswordToggle');
+
+  /* =====================================================
+     PASSWORD STRENGTH
+  ===================================================== */
+
+  const pwInput = document.getElementById('password');
+  const bars = document.querySelectorAll('#pwStrength span');
+
+  pwInput.addEventListener('input', function () {
+    const v = this.value;
+    let score = 0;
+
+    if (v.length >= 8) score++;
+    if (/[0-9]/.test(v)) score++;
+    if (/[^A-Za-z0-9]/.test(v)) score++;
+    if (/[A-Z]/.test(v) && /[a-z]/.test(v)) score++;
+
+    const colors = ['var(--red)', 'var(--red)', 'var(--gold)', 'var(--green)'];
+
+    bars.forEach((bar, index) => {
+      bar.style.background = index < score ? colors[Math.min(score, 4) - 1] : 'var(--line-2)';
+    });
+  });
+
+  /* =====================================================
+     CREATE ACCOUNT
+  ===================================================== */
+
+  const signupForm = document.getElementById('signupForm');
+  const signupMessage = document.getElementById('signupMessage');
+
+  signupForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    signupMessage.classList.remove('show', 'error', 'notice');
+
+    const name = document.getElementById('name').value.trim();
+    const email = document.getElementById('email').value.trim().toLowerCase();
+    const password = document.getElementById('password').value;
+    const confirmPassword = document.getElementById('confirmPassword').value;
+    const terms = document.getElementById('terms').checked;
+
+    if (!name) {
+      signupMessage.textContent = 'Please enter your full name.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    if (!email) {
+      signupMessage.textContent = 'Please enter your email address.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    if (password.length < 8) {
+      signupMessage.textContent = 'Password must be at least 8 characters long.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    if (password !== confirmPassword) {
+      signupMessage.textContent = 'Passwords do not match. Please check both password fields.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    if (!terms) {
+      signupMessage.textContent = 'Please accept the Terms of Service and Risk Disclosure.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    const submitButton = signupForm.querySelector('.signup-submit');
+    const previousText = submitButton.textContent;
+    submitButton.textContent = 'Creating account...';
+    submitButton.disabled = true;
+
+    try {
+      const result = await registerUser({
+        firstName: name.split(' ')[0],
+        lastName: name.split(' ').slice(1).join(' ') || 'Trader',
+        email,
+        password,
+        country: 'US',
+        phone: '',
+      });
+
+      // Signup succeeded, but the account is not verified yet.
+      // Switch to the OTP step instead of logging in immediately.
+      pendingEmail = email;
+      document.getElementById('otpEmailDisplay').textContent = email;
+      signupForm.style.display = 'none';
+      document.getElementById('signupLoginLink').style.display = 'none';
+      otpForm.style.display = '';
+
+      signupMessage.textContent = result.message || 'Check your email for a verification code.';
+      signupMessage.classList.add('show');
+    } catch (error) {
+      signupMessage.textContent = error.message || 'Account creation failed.';
+      signupMessage.classList.add('show', 'error');
+    } finally {
+      submitButton.textContent = previousText;
+      submitButton.disabled = false;
+    }
+  });
+
+  /* =====================================================
+     VERIFY OTP
+  ===================================================== */
+
+  let pendingEmail = '';
+  const otpForm = document.getElementById('otpForm');
+  const otpResendBtn = document.getElementById('otpResend');
+
+  otpForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    signupMessage.classList.remove('show', 'error', 'notice');
+
+    const code = document.getElementById('otpCode').value.trim();
+
+    if (code.length !== 6) {
+      signupMessage.textContent = 'Enter the 6-digit code from your email.';
+      signupMessage.classList.add('show', 'error');
+      return;
+    }
+
+    const otpSubmitBtn = document.getElementById('otpSubmit');
+    const previousText = otpSubmitBtn.textContent;
+    otpSubmitBtn.textContent = 'Verifying...';
+    otpSubmitBtn.disabled = true;
+
+    try {
+      const result = await verifyEmailOtp({ email: pendingEmail, code });
+
+      sessionStorage.setItem('fundedappleLoggedIn', 'true');
+      sessionStorage.setItem('fundedapple_access_token', result.accessToken);
+      sessionStorage.setItem('fundedapple_refresh_token', result.refreshToken || '');
+      sessionStorage.setItem('fundedapple_user_name', `${result.user.firstName} ${result.user.lastName}`.trim());
+      sessionStorage.setItem('fundedapple_user', JSON.stringify(result.user));
+
+      signupMessage.textContent = 'Email verified. Redirecting to your dashboard...';
+      signupMessage.classList.remove('error');
+      signupMessage.classList.add('show');
+
+      window.setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 700);
+    } catch (error) {
+      signupMessage.textContent = error.message || 'Verification failed.';
+      signupMessage.classList.add('show', 'error');
+    } finally {
+      otpSubmitBtn.textContent = previousText;
+      otpSubmitBtn.disabled = false;
+    }
+  });
+
+  otpResendBtn.addEventListener('click', async function () {
+    otpResendBtn.disabled = true;
+    otpResendBtn.textContent = 'Sending...';
+
+    try {
+      const result = await resendEmailOtp({ email: pendingEmail });
+      signupMessage.textContent = result.message || 'A new code has been sent.';
+      signupMessage.classList.remove('error');
+      signupMessage.classList.add('show');
+    } catch (error) {
+      signupMessage.textContent = error.message || 'Could not resend code.';
+      signupMessage.classList.add('show', 'error');
+    } finally {
+      otpResendBtn.disabled = false;
+      otpResendBtn.textContent = 'Resend code';
+    }
+  });
+</script>
+
+</body>
+</html>

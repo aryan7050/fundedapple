@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Fundedapple</title>
+<link rel="icon" href="assets/logo-mark.png">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+
+:root{
+  --bg:#070a08;
+  --surface:#0d1310;
+  --surface-2:#111914;
+  --card:#101713;
+  --card-hover:#131c16;
+
+  --border:rgba(255,255,255,.075);
+  --border-strong:rgba(255,255,255,.12);
+
+  --text:#f0f4f1;
+  --text-soft:#9ea8a1;
+  --text-faint:#5f6b63;
+
+  --green:#7fcb96;
+  --green-bright:#8de3a6;
+  --green-soft:rgba(127,203,150,.09);
+  --green-border:rgba(127,203,150,.20);
+
+  --red:#d98282;
+  --red-soft:rgba(217,130,130,.10);
+  --gold:#d9a94f;
+  --gold-soft:rgba(217,169,79,.10);
+
+  --radius:14px;
+}
+
+*{ box-sizing:border-box; margin:0; padding:0; }
+
+body{
+  min-height:100vh;
+  background:var(--bg);
+  color:var(--text);
+  font-family:'Inter',sans-serif;
+  -webkit-font-smoothing:antialiased;
+}
+
+.topbar{
+  display:flex; align-items:center; justify-content:space-between;
+  padding:18px 28px; border-bottom:1px solid var(--border);
+  background:var(--surface);
+}
+.topbar-brand{ display:flex; align-items:center; gap:10px; font-weight:700; font-size:15px; }
+.topbar-brand img{ width:22px; height:22px; border-radius:5px; }
+.topbar-right{ display:flex; align-items:center; gap:14px; font-size:13px; color:var(--text-soft); }
+.topbar-right button{
+  background:var(--card); border:1px solid var(--border-strong); color:var(--text);
+  padding:8px 14px; border-radius:8px; font-size:12px; cursor:pointer; font-family:inherit;
+}
+.topbar-right button:hover{ background:var(--card-hover); }
+
+.wrap{ max-width:1240px; margin:0 auto; padding:28px; }
+
+.tabs{ display:flex; gap:6px; margin-bottom:24px; flex-wrap:wrap; }
+.tab-btn{
+  background:transparent; border:1px solid var(--border);
+  color:var(--text-soft); padding:9px 16px; border-radius:9px;
+  font-size:13px; cursor:pointer; font-family:inherit; font-weight:500;
+}
+.tab-btn.active{ background:var(--green-soft); border-color:var(--green-border); color:var(--green-bright); }
+.tab-btn:hover:not(.active){ background:var(--card); color:var(--text); }
+
+.stat-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(160px,1fr)); gap:14px; margin-bottom:28px; }
+.stat-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); padding:18px; }
+.stat-card .n{ font-size:26px; font-weight:700; }
+.stat-card .l{ font-size:12px; color:var(--text-soft); margin-top:4px; }
+
+.panel-card{ background:var(--card); border:1px solid var(--border); border-radius:var(--radius); overflow-x:auto; }
+
+table{ width:100%; border-collapse:collapse; font-size:13px; min-width:800px; }
+thead th{
+  text-align:left; padding:12px 16px; color:var(--text-faint);
+  font-weight:600; font-size:11px; text-transform:uppercase; letter-spacing:.03em;
+  border-bottom:1px solid var(--border); white-space:nowrap;
+}
+tbody td{ padding:13px 16px; border-bottom:1px solid var(--border); vertical-align:middle; }
+tbody tr:last-child td{ border-bottom:none; }
+tbody tr:hover{ background:var(--card-hover); }
+
+.badge{ display:inline-block; padding:4px 10px; border-radius:100px; font-size:11px; font-weight:600; }
+.badge-pending{ background:var(--gold-soft); color:var(--gold); }
+.badge-approved,.badge-completed,.badge-paid,.badge-active,.badge-resolved{ background:var(--green-soft); color:var(--green-bright); }
+.badge-rejected,.badge-failed,.badge-breached{ background:var(--red-soft); color:var(--red); }
+.badge-open,.badge-processing,.badge-in_progress{ background:rgba(255,255,255,.08); color:var(--text-soft); }
+
+.row-actions{ display:flex; gap:8px; flex-wrap:wrap; }
+.row-actions button{
+  background:var(--surface-2); border:1px solid var(--border-strong); color:var(--text);
+  padding:6px 12px; border-radius:7px; font-size:12px; cursor:pointer; font-family:inherit;
+}
+.row-actions button.approve{ border-color:var(--green-border); color:var(--green-bright); }
+.row-actions button.reject{ border-color:rgba(217,130,130,.3); color:var(--red); }
+.row-actions select{
+  background:var(--surface-2); border:1px solid var(--border-strong); color:var(--text);
+  padding:6px 10px; border-radius:7px; font-size:12px; font-family:inherit;
+}
+
+.doc-thumb{
+  width:56px; height:38px; object-fit:cover; border-radius:6px;
+  border:1px solid var(--border-strong); transition:transform .15s ease;
+}
+.doc-thumb:hover{ transform:scale(1.08); border-color:var(--green-bright); }
+
+.empty{ padding:60px 20px; text-align:center; color:var(--text-faint); font-size:13px; }
+.loading{ padding:40px; text-align:center; color:var(--text-faint); font-size:13px; }
+
+.gate{
+  min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center;
+  gap:14px; text-align:center; padding:20px;
+}
+.gate a{ color:var(--green-bright); }
+
+.small{ color:var(--text-faint); font-size:11px; }
+
+@media(max-width:720px){
+  .wrap{ padding:16px; }
+}
+
+</style>
+</head>
+<body>
+
+<div id="gateScreen" class="gate" style="display:none;">
+  <h2>Admins only</h2>
+  <p class="small">You need an admin account to view this page.</p>
+  <a href="dashboard.html">← Back to dashboard</a>
+</div>
+
+<div id="adminApp" style="display:none;">
+
+  <div class="topbar">
+    <div class="topbar-brand">
+      <img src="assets/logo-mark.png" alt="">
+      <span>Fundedapple Admin</span>
+    </div>
+    <div class="topbar-right">
+      <span id="adminEmail"></span>
+      <button id="logoutBtn" type="button">Log out</button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <div class="stat-grid" id="statGrid">
+      <div class="stat-card"><div class="n">—</div><div class="l">Users</div></div>
+      <div class="stat-card"><div class="n">—</div><div class="l">Orders</div></div>
+      <div class="stat-card"><div class="n">—</div><div class="l">Payouts</div></div>
+      <div class="stat-card"><div class="n">—</div><div class="l">Tickets</div></div>
+    </div>
+
+    <div class="tabs">
+      <button class="tab-btn active" type="button" data-tab="kyc">KYC review</button>
+      <button class="tab-btn" type="button" data-tab="payouts">Payouts</button>
+      <button class="tab-btn" type="button" data-tab="tickets">Support tickets</button>
+      <button class="tab-btn" type="button" data-tab="orders">Orders</button>
+      <button class="tab-btn" type="button" data-tab="users">Users</button>
+    </div>
+
+    <div class="panel-card">
+      <div id="tabContent"><div class="loading">Loading...</div></div>
+    </div>
+
+  </div>
+
+</div>
+
+<script src="js/api.js"></script>
+<script>
+
+/* =====================================================
+   ACCESS GATE
+===================================================== */
+
+const isLoggedIn = sessionStorage.getItem('fundedappleLoggedIn') === 'true';
+let currentUser = null;
+try { currentUser = JSON.parse(sessionStorage.getItem('fundedapple_user') || 'null'); } catch(e) {}
+
+if (!isLoggedIn) {
+  window.location.replace('login.html');
+} else if (!currentUser || currentUser.role !== 'ADMIN') {
+  document.getElementById('gateScreen').style.display = 'flex';
+} else {
+  document.getElementById('adminApp').style.display = 'block';
+  document.getElementById('adminEmail').textContent = currentUser.email;
+  initAdmin();
+}
+
+document.getElementById('logoutBtn')?.addEventListener('click', function(){
+  sessionStorage.removeItem('fundedappleLoggedIn');
+  sessionStorage.removeItem('fundedappleAccount');
+  sessionStorage.removeItem('fundedapple_access_token');
+  sessionStorage.removeItem('fundedapple_refresh_token');
+  sessionStorage.removeItem('fundedapple_user');
+  sessionStorage.removeItem('fundedapple_user_name');
+  window.location.href = 'login.html';
+});
+
+/* =====================================================
+   HELPERS
+===================================================== */
+
+function fmtMoney(n){ return '$' + Number(n || 0).toLocaleString(undefined, { maximumFractionDigits: 2 }); }
+function fmtDate(d){ return d ? new Date(d).toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' }) : '—'; }
+function badge(status){
+  const cls = 'badge-' + String(status || '').toLowerCase();
+  return `<span class="badge ${cls}">${status}</span>`;
+}
+function userLabel(u){
+  if (!u) return '—';
+  return `${u.firstName || ''} ${u.lastName || ''}`.trim() + `<br><span class="small">${u.email || ''}</span>`;
+}
+
+/* =====================================================
+   INIT
+===================================================== */
+
+async function initAdmin(){
+  try {
+    const result = await fetchAdminDashboard();
+    const cards = document.querySelectorAll('#statGrid .stat-card .n');
+    cards[0].textContent = result.stats.users;
+    cards[1].textContent = result.stats.orders;
+    cards[2].textContent = result.stats.payouts;
+    cards[3].textContent = result.stats.tickets;
+  } catch(e) { console.error(e); }
+
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      loadTab(btn.dataset.tab);
+    });
+  });
+
+  loadTab('kyc');
+}
+
+async function loadTab(tab){
+  const el = document.getElementById('tabContent');
+  el.innerHTML = '<div class="loading">Loading...</div>';
+
+  try {
+    if (tab === 'kyc') await renderKyc(el);
+    else if (tab === 'payouts') await renderPayouts(el);
+    else if (tab === 'tickets') await renderTickets(el);
+    else if (tab === 'orders') await renderOrders(el);
+    else if (tab === 'users') await renderUsers(el);
+  } catch (error) {
+    el.innerHTML = `<div class="empty">Could not load this data: ${error.message}</div>`;
+  }
+}
+
+/* =====================================================
+   KYC TAB (With Photo Previews)
+===================================================== */
+
+async function renderKyc(el){
+  const { users } = await fetchAdminKyc();
+
+  if (!users || !users.length) {
+    el.innerHTML = '<div class="empty">No KYC submissions yet.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead>
+        <tr>
+          <th>Trader</th>
+          <th>Submitted</th>
+          <th>ID Details</th>
+          <th>Document Photos</th>
+          <th>Address</th>
+          <th>Status</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        ${users.map(u => `
+          <tr data-user-id="${u.id}">
+            <td data-label="Trader">${userLabel(u)}</td>
+            <td data-label="Submitted">${fmtDate(u.kycSubmittedAt)}</td>
+            <td data-label="ID Details">
+              <strong>${u.idDocumentType || '—'}</strong><br>
+              <span class="small">${u.idDocumentNumber || ''}</span>
+            </td>
+            <td data-label="Document Photos">
+              <div style="display:flex; gap:10px; align-items:center;">
+                ${u.idDocumentFrontUrl ? `
+                  <a href="${u.idDocumentFrontUrl}" target="_blank" title="Click to view Front photo in full size">
+                    <img class="doc-thumb" src="${u.idDocumentFrontUrl}" alt="Front">
+                    <div class="small" style="text-align:center; color:var(--green-bright); margin-top:2px;">Front ↗</div>
+                  </a>
+                ` : '<span class="small" style="color:var(--text-faint);">No Front</span>'}
+
+                ${u.idDocumentBackUrl ? `
+                  <a href="${u.idDocumentBackUrl}" target="_blank" title="Click to view Back photo in full size">
+                    <img class="doc-thumb" src="${u.idDocumentBackUrl}" alt="Back">
+                    <div class="small" style="text-align:center; color:var(--green-bright); margin-top:2px;">Back ↗</div>
+                  </a>
+                ` : '<span class="small" style="color:var(--text-faint);">No Back</span>'}
+              </div>
+            </td>
+            <td data-label="Address">${u.addressLine1 || ''}, ${u.city || ''} ${u.stateProvince || ''} ${u.postalCode || ''}</td>
+            <td data-label="Status">
+              ${badge(u.kycStatus)}
+              ${u.kycStatus === 'REJECTED' && u.kycRejectionReason ? `<br><span class="small" style="color:var(--red);">${u.kycRejectionReason}</span>` : ''}
+            </td>
+            <td data-label="Action">
+              ${u.kycStatus === 'PENDING' ? `
+                <div class="row-actions">
+                  <button class="approve" onclick="handleKycReview('${u.id}','approve')">Approve</button>
+                  <button class="reject" onclick="handleKycReview('${u.id}','reject')">Reject</button>
+                </div>
+              ` : '<span class="small">Reviewed</span>'}
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function handleKycReview(userId, action){
+  let reason = null;
+  if (action === 'reject') {
+    reason = prompt('Reason for rejection (shown to the trader):', 'Document unclear, please resubmit.');
+    if (reason === null) return;
+  }
+  try {
+    await reviewKyc(userId, { action, reason });
+    loadTab('kyc');
+  } catch (error) {
+    alert(error.message || 'Could not update KYC status.');
+  }
+}
+
+/* =====================================================
+   PAYOUTS TAB
+===================================================== */
+
+async function renderPayouts(el){
+  const { payouts } = await fetchAdminPayouts();
+
+  if (!payouts || !payouts.length) {
+    el.innerHTML = '<div class="empty">No payout requests yet.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Trader</th><th>Requested</th><th>Amount</th><th>Method</th><th>Notes</th><th>Status</th></tr></thead>
+      <tbody>
+        ${payouts.map(p => `
+          <tr>
+            <td data-label="Trader">${userLabel(p.user)}</td>
+            <td data-label="Requested">${fmtDate(p.requestedAt)}</td>
+            <td data-label="Amount">${fmtMoney(p.amount)}</td>
+            <td data-label="Method">${p.payoutMethod || '—'}</td>
+            <td data-label="Notes">${p.notes || '—'}</td>
+            <td data-label="Status">
+              <select onchange="handlePayoutStatus('${p.id}', this.value)">
+                ${['PENDING','PROCESSING','COMPLETED','REJECTED'].map(s => `<option value="${s}" ${s===p.status?'selected':''}>${s}</option>`).join('')}
+              </select>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function handlePayoutStatus(id, status){
+  try {
+    await updatePayoutStatus(id, status);
+    loadTab('payouts');
+  } catch (error) {
+    alert(error.message || 'Could not update payout status.');
+  }
+}
+
+/* =====================================================
+   TICKETS TAB
+===================================================== */
+
+async function renderTickets(el){
+  const { tickets } = await fetchAdminTickets();
+
+  if (!tickets || !tickets.length) {
+    el.innerHTML = '<div class="empty">No support tickets yet.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Trader</th><th>Subject</th><th>Message</th><th>Priority</th><th>Opened</th><th>Status</th></tr></thead>
+      <tbody>
+        ${tickets.map(t => `
+          <tr>
+            <td data-label="Trader">${userLabel(t.user)}</td>
+            <td data-label="Subject">${t.subject}</td>
+            <td data-label="Message"><span class="small">${t.message}</span></td>
+            <td data-label="Priority">${t.priority}</td>
+            <td data-label="Opened">${fmtDate(t.createdAt)}</td>
+            <td data-label="Status">
+              <select onchange="handleTicketStatus('${t.id}', this.value)">
+                ${['OPEN','IN_PROGRESS','RESOLVED','CLOSED'].map(s => `<option value="${s}" ${s===t.status?'selected':''}>${s}</option>`).join('')}
+              </select>
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+async function handleTicketStatus(id, status){
+  try {
+    await updateTicketStatus(id, status);
+    loadTab('tickets');
+  } catch (error) {
+    alert(error.message || 'Could not update ticket status.');
+  }
+}
+
+/* =====================================================
+   ORDERS TAB
+===================================================== */
+
+async function renderOrders(el){
+  const { orders } = await fetchAdminOrders();
+
+  if (!orders || !orders.length) {
+    el.innerHTML = '<div class="empty">No orders yet.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Trader</th><th>Plan</th><th>Amount</th><th>Date</th><th>Status</th></tr></thead>
+      <tbody>
+        ${orders.map(o => `
+          <tr>
+            <td data-label="Trader">${userLabel(o.user)}</td>
+            <td data-label="Plan">${o.plan?.name || '—'}</td>
+            <td data-label="Amount">${fmtMoney(o.amount)}</td>
+            <td data-label="Date">${fmtDate(o.createdAt)}</td>
+            <td data-label="Status">${badge(o.status)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+/* =====================================================
+   USERS TAB
+===================================================== */
+
+async function renderUsers(el){
+  const { users } = await fetchAdminUsers();
+
+  if (!users || !users.length) {
+    el.innerHTML = '<div class="empty">No users yet.</div>';
+    return;
+  }
+
+  el.innerHTML = `
+    <table>
+      <thead><tr><th>Name</th><th>Email</th><th>Role</th><th>Verified</th><th>Joined</th></tr></thead>
+      <tbody>
+        ${users.map(u => `
+          <tr>
+            <td data-label="Name">${u.firstName} ${u.lastName}</td>
+            <td data-label="Email">${u.email}</td>
+            <td data-label="Role">${u.role}</td>
+            <td data-label="Verified">${u.isVerified ? 'Yes' : 'No'}</td>
+            <td data-label="Joined">${fmtDate(u.createdAt)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>
+  `;
+}
+
+</script>
+</body>
+</html>
