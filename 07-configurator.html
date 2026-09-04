@@ -1,0 +1,489 @@
+<section class="alt" id="configurator">
+
+  <div class="wrap">
+
+    <!-- =========================================
+         CONFIGURATOR HEADING
+    ========================================== -->
+
+    <div class="sec-head config-head-wrap">
+
+      <div class="eyebrow">
+        Build your challenge
+      </div>
+
+      <h2>
+        Pick a model, pick a size.
+      </h2>
+
+      <p>
+        Every model carries the same 24-hour payout guarantee.
+        Rules and pricing below are exactly what you trade under.
+      </p>
+
+      <div class="live-badge">
+        <span class="live-dot"></span>
+        Live pricing — updates as you switch models
+      </div>
+      <button class="save-plan-btn" id="savePlanBtn" type="button" aria-pressed="false">
+        <span class="save-plan-icon">+</span>
+        <span id="savePlanLabel">Save this setup</span>
+      </button>
+
+    </div>
+
+
+    <!-- =========================================
+         STEP 1 — MODEL SELECTION
+    ========================================== -->
+
+    <div class="config-step-head">
+      <span class="config-step-number">01</span>
+      <span><b>Choose your route</b><small>Start with the trading model that fits your style.</small></span>
+      <em>Model</em>
+    </div>
+
+    <div class="model-grid" id="configTabs">
+
+      <!-- 2-STEP -->
+
+      <div
+        class="model-card active"
+        data-track="two"
+      >
+
+        <div class="model-icon model-icon-steps" aria-hidden="true"><span></span><span></span></div>
+
+        <div class="model-name">
+          2-Step
+        </div>
+
+        <div class="model-tag">
+          Balanced
+        </div>
+
+        <div class="model-benefit">
+          Up to 90% profit split
+        </div>
+
+      </div>
+
+
+      <!-- 1-STEP -->
+
+      <div
+        class="model-card"
+        data-track="one"
+      >
+
+        <div class="model-icon model-icon-route" aria-hidden="true"><span></span></div>
+
+        <div class="model-name">
+          1-Step
+        </div>
+
+        <div class="model-tag">
+          Straightforward
+        </div>
+
+        <div class="model-benefit">
+          One phase, straight to funded
+        </div>
+
+      </div>
+
+
+      <!-- BLITZ -->
+
+      <div
+        class="model-card"
+        data-track="blitz"
+      >
+
+        <div class="model-icon model-icon-blitz" aria-hidden="true"><span></span><span></span><span></span></div>
+
+        <div class="model-name">
+          Blitz
+        </div>
+
+        <div class="model-tag">
+          3-day sprint
+        </div>
+
+        <div class="model-benefit">
+          Funded in as little as 2 days
+        </div>
+
+      </div>
+
+
+      <!-- INSTANT -->
+
+      <div
+        class="model-card"
+        data-track="instant"
+      >
+
+        <div class="model-icon model-icon-instant" aria-hidden="true"><span></span></div>
+
+        <div class="model-name">
+          Instant
+        </div>
+
+        <div class="model-tag">
+          Skip the challenge
+        </div>
+
+        <div class="model-benefit">
+          No evaluation at all
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         STEP 2 — CONFIGURATOR
+    ========================================== -->
+
+    <div class="config-step-head config-step-head-second">
+      <span class="config-step-number">02</span>
+      <span><b>Shape your account</b><small>Pick a size, review the rules, then see your exact fee.</small></span>
+      <em>Details</em>
+    </div>
+
+    <div
+      class="config-outer"
+      id="configOuter"
+    >
+
+      <div class="config-columns">
+
+
+        <!-- =====================================
+             ACCOUNT SIZE — HORIZONTAL
+        ====================================== -->
+
+        <div class="config-left">
+
+          <div class="config-label">
+            Account size
+          </div>
+          <div class="config-panel-title">Choose your starting balance</div>
+          <div class="config-panel-note">One-time fee. No recurring subscription.</div>
+
+          <div
+            class="size-card-grid"
+            id="sizeGrid"
+          ></div>
+
+        </div>
+
+
+        <!-- =====================================
+             RULES + ADDONS + PRICE
+        ====================================== -->
+
+        <div class="config-right">
+
+          <div class="config-panel-kicker"><span></span> Your challenge blueprint</div>
+
+
+          <!-- ===================================
+               CENTER WATERMARK
+          ==================================== -->
+
+          <img
+            class="rules-watermark"
+            src="assets/logo-mark.png"
+            alt=""
+            aria-hidden="true"
+          >
+
+
+          <!-- ===================================
+               RULE TABS
+          ==================================== -->
+
+          <div class="rules-tabs">
+
+            <button
+              class="rules-tab active"
+              type="button"
+              data-panel="challenge"
+            >
+              Challenge rules
+            </button>
+
+            <button
+              class="rules-tab"
+              type="button"
+              data-panel="funded"
+            >
+              Funded &amp; payout
+            </button>
+
+          </div>
+
+
+          <!-- ===================================
+               RULE CONTENT
+          ==================================== -->
+
+          <div
+            class="rules-panel-single"
+            id="rulesPanelSingle"
+          ></div>
+
+
+          <!-- ===================================
+               ADD-ONS
+          ==================================== -->
+
+          <div class="addons-block">
+
+            <div class="addons-label">
+              Add-ons available
+            </div>
+
+            <div class="addons-chips">
+
+
+              <!-- LIFETIME SPLIT -->
+
+              <span
+                class="addon-chip"
+                title="Keep your profit split at its maximum rate permanently, instead of it resetting."
+              >
+                Lifetime 95% split
+              </span>
+
+
+              <!-- EA -->
+
+              <span
+                class="addon-chip"
+                title="Trade with Expert Advisors / algorithmic strategies on your funded account."
+              >
+                EA / algo trading
+              </span>
+
+
+              <!-- DOUBLE ACCOUNT -->
+
+              <span
+                class="addon-chip"
+                title="Double your funded account size after your first successful payout."
+              >
+                Double account size
+              </span>
+
+
+              <!-- SCALING -->
+
+              <span
+                class="addon-chip"
+                title="Qualify for larger account sizes over time as you post consistent payouts."
+              >
+                Scaling plan
+              </span>
+
+
+              <!-- NEWS -->
+
+              <span
+                class="addon-chip"
+                title="Trade through high-impact news events without restriction."
+              >
+                News trading unlock
+              </span>
+
+
+            </div>
+
+          </div>
+
+
+          <!-- ===================================
+               PRICE PANEL
+          ==================================== -->
+
+          <div class="price-panel">
+
+
+            <!-- SMALL PRICE WATERMARK -->
+
+            <img
+              class="brand-logo price-watermark"
+              src="assets/logo-mark.png"
+              alt=""
+              aria-hidden="true"
+            >
+
+
+            <!-- PRICE INFORMATION -->
+
+            <div class="price-info">
+
+
+              <!-- SELECTED MODEL -->
+
+              <div
+                class="price-model"
+                id="priceModelName"
+              >
+                2-Step Challenge
+              </div>
+
+
+              <!-- SELECTED ACCOUNT -->
+
+              <div
+                class="price-account"
+                id="priceAccountName"
+              >
+                $25K Account
+              </div>
+
+
+              <!-- TOTAL PRICE LABEL -->
+
+              <div class="price-label">
+                Total price
+              </div>
+
+
+              <!-- PRICE -->
+
+              <div
+                class="pv mono"
+                id="priceOut"
+              >
+                $149
+              </div>
+
+
+              <!-- PRICE NOTE -->
+
+              <div
+                class="pn"
+                id="priceNote"
+              >
+                one-time, 100% refundable on first payout
+              </div>
+
+
+            </div>
+
+
+            <!-- GET FUNDED BUTTON -->
+
+            <a
+              href="checkout.html"
+              id="getFundedBtn"
+              class="btn btn-primary btn-large"
+            >
+
+              Get funded
+
+              <svg
+                width="16"
+                height="16"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2.5"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                aria-hidden="true"
+              >
+
+                <path d="M5 12h14"></path>
+
+                <path d="M13 6l6 6-6 6"></path>
+
+              </svg>
+
+            </a>
+
+
+          </div>
+
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+
+
+<!-- =========================================
+     RULE INFORMATION POPUP
+========================================= -->
+
+<div
+  class="rule-info-overlay"
+  id="ruleInfoOverlay"
+  aria-hidden="true"
+>
+
+  <div
+    class="rule-info-modal"
+    role="dialog"
+    aria-modal="true"
+    aria-labelledby="ruleInfoTitle"
+  >
+
+
+    <!-- CLOSE -->
+
+    <button
+      type="button"
+      class="rule-info-close"
+      id="ruleInfoClose"
+      aria-label="Close rule details"
+    >
+      ×
+    </button>
+
+
+    <!-- POPUP LABEL -->
+
+    <div class="rule-info-eyebrow">
+      Rule details
+    </div>
+
+
+    <!-- RULE NAME -->
+
+    <h3 id="ruleInfoTitle">
+      Rule
+    </h3>
+
+
+    <!-- RULE VALUE -->
+
+    <div
+      class="rule-info-value"
+      id="ruleInfoValue"
+    >
+      —
+    </div>
+
+
+    <!-- RULE EXPLANATION -->
+
+    <p id="ruleInfoText">
+      Rule information will appear here.
+    </p>
+
+
+  </div>
+
+</div>

@@ -1,0 +1,64 @@
+<style>
+/* ============ Guarantee band polish (additive-only, scoped) ============
+   Note: .guarantee-outer::before (conic spin glow) and .guarantee-band::before
+   (breathing radial glow) already exist in styles.css — intentionally left
+   untouched. Everything below only adds NEW, non-conflicting effects.
+============================================================================ */
+
+.guarantee-band{
+  transition:transform .3s cubic-bezier(.16,1,.3,1), box-shadow .3s cubic-bezier(.16,1,.3,1);
+}
+.guarantee-band:hover{
+  transform:translateY(-3px);
+  box-shadow:0 24px 60px rgba(0,0,0,.28);
+}
+
+/* a second, slower ambient glow using ::after (::before is already taken) */
+.guarantee-band::after{
+  content:"";
+  position:absolute;
+  top:-100px; right:-60px;
+  width:220px; height:220px;
+  border-radius:50%;
+  background:radial-gradient(circle, rgba(217,169,79,.10), transparent 70%);
+  pointer-events:none;
+  z-index:0;
+  animation:guaranteeDrift 9s ease-in-out infinite;
+}
+@keyframes guaranteeDrift{
+  0%,100%{ transform:translate(0,0); }
+  50%{ transform:translate(-16px,18px); }
+}
+
+.g-mark{ transition:transform .3s cubic-bezier(.16,1,.3,1); }
+.guarantee-band:hover .g-mark{ transform:scale(1.06) rotate(-2deg); }
+
+.g-figure{ transition:transform .25s cubic-bezier(.16,1,.3,1); }
+.g-figure:hover{ transform:translateY(-2px); }
+
+@media (prefers-reduced-motion: reduce){
+  .guarantee-band::after{ animation:none !important; }
+  .guarantee-band, .g-mark, .g-figure{ transition:none !important; }
+}
+</style>
+
+  <div class="wrap">
+    <div class="guarantee-outer">
+      <div class="guarantee-band">
+        <div style="display:flex;align-items:center;gap:22px;">
+          <img class="g-mark" src="assets/logo-mark.png" alt="Fundedapple logo" width="56" height="56">
+          <div>
+            <div class="eyebrow" style="margin-bottom:8px;">Built for clarity</div>
+            <h3 style="font-family:'Fraunces',serif;font-weight:500;font-size:24px;color:var(--text);">Clear rules. Fast payouts. <em style="color:var(--gold);font-style:italic;">No runaround.</em></h3>
+            <p style="color:var(--text-soft);font-size:14px;max-width:420px;margin-top:6px;">We publish the terms upfront and keep the payout promise simple: if your request is verified and it misses the 24-hour window, we make it right automatically.</p>
+          </div>
+        </div>
+        <div class="g-figures">
+          <div class="g-figure"><div class="gv green">24h</div><div class="gl">payout window</div></div>
+          <div class="g-divider"></div>
+          <div class="g-figure"><div class="gv red">$1k</div><div class="gl">if we miss it</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

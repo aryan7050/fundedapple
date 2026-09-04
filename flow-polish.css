@@ -1,0 +1,54 @@
+/* Shared polish for auth, checkout, and payment flows. */
+
+body.login-page,
+body.checkout-page,
+body.payment-page {
+  background-image:
+    linear-gradient(rgba(127, 203, 150, .022) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(127, 203, 150, .022) 1px, transparent 1px);
+  background-size: 48px 48px;
+}
+
+.login-card,
+.checkout-card,
+.payment-card,
+.order-summary {
+  box-shadow: 0 22px 60px rgba(0, 0, 0, .24), 0 0 0 1px rgba(127, 203, 150, .025);
+}
+
+.login-field input:focus-visible,
+.signup-field input:focus-visible,
+.checkout-card input:focus-visible,
+.payment-card input:focus-visible,
+button:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--green, #7fcb96);
+  outline-offset: 3px;
+}
+
+.login-submit,
+.signup-submit,
+.checkout-submit,
+.payment-submit {
+  min-height: 50px;
+}
+
+@media (max-width: 640px) {
+  .wrap {
+    width: min(100% - 32px, 1160px);
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .login-main,
+  .checkout-main,
+  .payment-main {
+    padding-top: 36px;
+    padding-bottom: 56px;
+  }
+}
+
+.legal-main{min-height:calc(100vh - 72px);display:flex;align-items:center;justify-content:center;padding:64px 20px;}
+.legal-card{width:min(100%,720px);padding:42px;border:1px solid var(--card-border,rgba(255,255,255,.08));border-radius:16px;background:var(--card-bg,rgba(18,26,22,.68));box-shadow:0 22px 60px rgba(0,0,0,.24);}
+.legal-card h1{margin-top:14px;font:500 clamp(34px,5vw,52px)/1.05 'Fraunces',serif;}.legal-card h2{margin-top:28px;font:500 20px 'Fraunces',serif;color:var(--text,#f0f4f1);}.legal-card p{margin-top:9px;color:var(--text-soft,#9ea8a1);font-size:14px;line-height:1.75;}.legal-card .legal-lead{font-size:16px;}.legal-card .btn{margin-top:30px;}
+@media(max-width:520px){.legal-main{padding:34px 16px;}.legal-card{padding:28px 22px;}}

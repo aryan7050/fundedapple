@@ -1,0 +1,494 @@
+FUNDAPPLE BACKEND GUIDE (MATCHED TO CURRENT PROJECT STATUS)
+==========================================================
+
+This project is not a full enterprise SaaS yet. Right now, the workspace is mostly a static marketing site plus dashboard UI, not a live product backend.
+
+So the correct approach is a practical MVP backend that fits the current status and can be expanded later.
+
+
+1. CURRENT PROJECT STATUS
+-------------------------
+What already exists in this repo:
+- landing page and marketing sections
+- login page
+- create account page
+- forgot password page
+- payment and checkout pages
+- dashboard HTML layout
+- various static pages like terms, refund, risk disclosure
+- some JavaScript for UI interactions and localStorage-based saving logic
+
+What does not exist yet:
+- real database
+- real user authentication
+- production payment handling
+- real challenge/account lifecycle
+- orders and billing records
+- payout approval system
+- admin management
+- email verification flow
+- API layer connecting frontend to real data
+
+This means the project is currently at the stage of: frontend-ready, backend-not-started.
+
+
+2. BEST BACKEND CHOICE FOR THIS PROJECT RIGHT NOW
+--------------------------------------------------
+Use a simple but real stack:
+- Backend: Node.js + Express.js or NestJS
+- TypeScript: yes, preferred
+- Database: PostgreSQL
+- ORM: Prisma
+- Auth: JWT + refresh tokens
+- Payments: Stripe (primary, simplest) or Razorpay if local market needs it
+- Email: Resend or SendGrid
+- Cache: Redis (optional but useful)
+- Hosting: Docker + VPS / Render / Railway / DigitalOcean
+
+Recommendation for this exact repo:
+- Express + TypeScript + Prisma + PostgreSQL + JWT + Stripe
+
+Why this fits:
+- easier for a static HTML/CSS frontend to connect to
+- lighter than building a heavy enterprise stack from day one
+- enough for a real funded challenge platform MVP
+- easy to upgrade later into a larger structure
+
+Do not overbuild with a giant microservice architecture at this stage. This repo is not at that level yet.
+
+
+3. MVP GOAL
+-----------
+The first backend version should support only the essential business flow:
+- user signup and login
+- email verification
+- plan list and pricing
+- create order and checkout session
+- successful payment confirmation
+- issue funded account / challenge account
+- dashboard summary API
+- user payout requests
+- admin review of payouts
+- basic support tickets
+
+This is the correct minimum set to make the project work like a real product.
+
+
+4. RECOMMENDED PROJECT STRUCTURE
+---------------------------------
+backend/
+  src/
+    app.ts
+    server.ts
+    config/
+      env.ts
+      db.ts
+    middleware/
+      auth.ts
+      errorHandler.ts
+      validate.ts
+    routes/
+      auth.routes.ts
+      plans.routes.ts
+      orders.routes.ts
+      payments.routes.ts
+      dashboard.routes.ts
+      payouts.routes.ts
+      admin.routes.ts
+      tickets.routes.ts
+    controllers/
+      auth.controller.ts
+      plans.controller.ts
+      orders.controller.ts
+      payments.controller.ts
+      dashboard.controller.ts
+      payouts.controller.ts
+      admin.controller.ts
+      tickets.controller.ts
+    services/
+      auth.service.ts
+      plans.service.ts
+      orders.service.ts
+      payments.service.ts
+      dashboard.service.ts
+      payouts.service.ts
+      admin.service.ts
+      tickets.service.ts
+    prisma/
+      schema.prisma
+    utils/
+      jwt.ts
+      hash.ts
+      email.ts
+      logger.ts
+    types/
+      user.ts
+      order.ts
+      account.ts
+
+This is more than enough for this project's current stage.
+
+
+5. DATABASE DESIGN (PRAGMATIC)
+------------------------------
+Core tables:
+
+User
+- id
+- email
+- passwordHash
+- firstName
+- lastName
+- country
+- phone
+- role
+- isVerified
+- isActive
+- createdAt
+- updatedAt
+
+Plan
+- id
+- name
+- type
+- price
+- initialBalance
+- profitTarget
+- maxDrawdown
+- dailyLossLimit
+- minTradingDays
+- status
+- createdAt
+
+Order
+- id
+- userId
+- planId
+- amount
+- currency
+- status
+- paymentProvider
+- paymentIntentId
+- createdAt
+
+Account
+- id
+- userId
+- planId
+- status
+- phase
+- balance
+- startDate
+- endDate
+- passStatus
+- createdAt
+
+Payout
+- id
+- userId
+- accountId
+- amount
+- status
+- requestedAt
+- processedAt
+- payoutMethod
+- notes
+
+Ticket
+- id
+- userId
+- subject
+- message
+- status
+- priority
+- createdAt
+
+AuditLog
+- id
+- userId
+- action
+- metadata
+- createdAt
+
+Session
+- id
+- userId
+- refreshTokenHash
+- expiresAt
+- createdAt
+
+This is enough to make the platform functional without building a huge internal system upfront.
+
+
+6. AUTH MODULE
+--------------
+This is the first required backend feature.
+
+Endpoints:
+- POST /api/auth/signup
+- POST /api/auth/login
+- POST /api/auth/logout
+- POST /api/auth/refresh
+- POST /api/auth/verify-email
+- GET /api/auth/me
+
+Requirements:
+- hash password using bcrypt or argon2
+- use JWT access token
+- store refresh token in DB or secure cookie
+- validate email format
+- check duplicate account creation
+- allow role-based access (user/admin)
+- protect user routes through middleware
+
+This is where you convert the static login and create account pages into real app flows.
+
+
+7. PLAN AND PRICING MODULE
+--------------------------
+The frontend currently has a challenge configurator and size selection logic.
+
+Backend API should be the single source of truth:
+- GET /api/plans
+- GET /api/plans/:id
+- POST /api/plans/preview
+
+Plan data should not be hardcoded in frontend. It must come from database or admin config.
+
+The backend will provide:
+- price
+- account sizes
+- target %
+- max drawdown
+- daily loss rules
+- minimum days
+- reset option
+
+This is important because the dashboard and checkout pages need a trusted source of pricing.
+
+
+8. ORDER + PAYMENT FLOW
+-----------------------
+This is the real business engine.
+
+Flow should be:
+1. user selects a challenge plan
+2. backend creates an order
+3. backend creates Stripe checkout session
+4. user pays
+5. Stripe webhook confirms payment
+6. backend updates order status to paid
+7. backend creates or activates the challenge account
+8. frontend shows success and dashboard entry
+
+Endpoints:
+- POST /api/orders/create
+- GET /api/orders/:id
+- GET /api/orders
+- POST /api/payments/create-checkout
+- POST /api/payments/webhook
+- GET /api/payments/status/:id
+
+Important rules:
+- do not trust frontend price values
+- verify webhook signature before marking payment successful
+- always keep a payment log
+- save transaction id and status
+
+This is mandatory for a real platform.
+
+
+9. ACCOUNT LIFE CYCLE
+---------------------
+After order is paid, create a user account record.
+
+Account states:
+- pending
+- active
+- phase1
+- phase2
+- funded
+- failed
+- breached
+- cancelled
+
+The account should track:
+- current phase
+- balance
+- profitability
+- drawdown
+- min trading day rules
+- reset eligibility
+
+This is the core of the prop-firm business, and it should be a backend responsibility.
+
+If you do not do this, the dashboard remains fake even if the UI looks polished.
+
+
+10. DASHBOARD API
+----------------
+The dashboard is already designed, so the backend should expose real data to it.
+
+Endpoints:
+- GET /api/dashboard/summary
+- GET /api/dashboard/accounts
+- GET /api/dashboard/transactions
+- GET /api/dashboard/payouts
+- GET /api/dashboard/notifications
+
+Dashboard data should include:
+- current status
+- funded balance
+- challenge progress
+- profit metrics
+- payout history
+- account health
+- recent activity
+
+At this stage, dashboard logic should be connected to the API and not rely on dummy data.
+
+
+11. PAYOUT MODULE
+-----------------
+This is essential for a funded account platform.
+
+Endpoints:
+- POST /api/payouts/request
+- GET /api/payouts/history
+- PATCH /api/payouts/:id/status
+- GET /api/payouts/eligibility
+
+Requirements:
+- only funded users can request payout
+- verify payout eligibility rules
+- store admin decision trail
+- prevent duplicate payout requests
+- log every payout action
+
+This is one of the major business features after auth + payment.
+
+
+12. SUPPORT + ADMIN MODULE
+-------------------------
+Basic support module:
+- POST /api/tickets
+- GET /api/tickets
+- GET /api/tickets/:id
+- PATCH /api/tickets/:id
+
+Admin module:
+- GET /api/admin/dashboard
+- GET /api/admin/users
+- GET /api/admin/orders
+- PATCH /api/admin/payouts/:id
+- PATCH /api/admin/users/:id/status
+
+This is needed for real operations, not only front-end content pages.
+
+
+13. SECURITY MUST-HAVES
+-----------------------
+Even in MVP, these are required:
+- bcrypt password hashing
+- JWT access tokens
+- refresh token rotation
+- CORS configuration
+- request validation
+- rate limiting on login/register routes
+- environment variables for secrets
+- webhook signature validation
+- role-based access for admin routes
+- logs for payment and payout actions
+
+This project handles real money, so security is not optional.
+
+
+14. ENV FILE EXAMPLE
+--------------------
+PORT=4000
+NODE_ENV=development
+DATABASE_URL="postgresql://postgres:postgres@localhost:5432/fundedapple"
+JWT_ACCESS_SECRET=change_this
+JWT_REFRESH_SECRET=change_this
+STRIPE_SECRET_KEY=sk_test_xxx
+STRIPE_WEBHOOK_SECRET=whsec_xxx
+RESEND_API_KEY=re_xxx
+FRONTEND_URL=http://localhost:8000
+
+
+15. IMPLEMENTATION ORDER
+------------------------
+For this exact project, follow this order:
+
+Phase 1: foundation
+- initialize backend
+- set up PostgreSQL + Prisma
+- create user model
+- implement signup/login
+- add JWT auth
+- create protected routes
+
+Phase 2: commerce
+- plan model
+- checkout order flow
+- Stripe integration
+- webhook validation
+- order status tracking
+
+Phase 3: product core
+- account generation
+- dashboard API
+- payout request flow
+- support tickets
+
+Phase 4: operations
+- admin dashboard
+- logs and audits
+- moderation and support review
+- deployment and monitoring
+
+This order matches the current repo much better than trying to build everything at once.
+
+
+16. WHAT IS ACTUALLY REMAINING
+------------------------------
+The remaining work is not just design. It is the real business stack:
+
+- real login/signup backend
+- database schema and saved user data
+- plan data source
+- payment + order flow
+- dashboard wiring to real API
+- challenge/account state API
+- payout and admin features
+- deployment and monitoring
+
+The frontend can already look premium; the backend is what turns it into a usable platform.
+
+
+17. SIMPLE FINAL RECOMMENDATION
+------------------------------
+For this repo, the best path is:
+- keep the current frontend pages
+- build a backend MVP with Express + TypeScript + Prisma + Postgres + Stripe + JWT
+- connect the login, signup, checkout, and dashboard to live APIs
+- then add payout + admin flows after the core is working
+
+This is the best match for the current project status.
+
+If you build only the frontend, it remains a website.
+If you build the backend above, it becomes a real platform.
+
+
+18. NEXT STEP
+-------------
+The next step should be:
+1. create backend folder
+2. install dependencies
+3. make Prisma schema
+4. build auth routes
+5. build plans + orders + payments
+6. hook dashboard APIs
+7. deploy and test end-to-end
+
+That is the correct progression for this project.
